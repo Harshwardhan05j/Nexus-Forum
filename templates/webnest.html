@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Web Nest Technology Club | The Nexus Forum{% endblock %}
+
+{% block additional_css %}
+    <link rel="stylesheet" href="{{url_for('static', filename='webnest.css')}}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Web Nest Technology Club</h1>
+        <p>Where Innovation Meets the Web — Building the Future of Technology</p>
+    </div>
+
+    <div class="container">
+        <div class="about-section" id="about">
+            <h2>About Us</h2>
+            <p>
+                <strong>Web Nest</strong> is a creative technology club under the Nexus Forum. We aim to foster innovation and technical excellence among students by providing hands-on experience in web development, programming, and emerging technologies.
+            </p>
+
+            <h2>Our Vision</h2>
+            <p>
+                To empower tech enthusiasts to design, develop, and deploy solutions that shape tomorrow’s digital world.
+            </p>
+
+            <h2>Activities</h2>
+            <ul>
+                <li>Workshops on Web Development (HTML, CSS, JavaScript, React, etc.)</li>
+                <li>Hackathons and Coding Challenges</li>
+                <li>Tech Talks and Guest Sessions</li>
+                <li>Open Source and Collaborative Projects</li>
+                <li>AI, IoT, and Cloud Learning Series</li>
+            </ul>
+        </div>
+
+        <div class="join-section" id="join">
+            <h2>Join Us</h2>
+            <p>
+                Passionate about technology and innovation? Become a member of Web Nest today!
+            </p>
+            <a href="{{url_for('join_club', club_name='Web Nest Technology Club')}}"><button class="join-btn">Join Now</button></a>
+        </div>
+
+        <div class="contact-section" id="contact">
+            <h2>Contact</h2>
+            <p><strong>Club Head:</strong> Umang Sharma 
+            <br>Email: <a href="mailto:umang.webnest@nexusforum.edu">umang.webnest@nexusforum.edu</a></p>
+
+            <p><strong>Co-Head:</strong> Riya Patel
+            <br>Email: <a href="mailto:riya.webnest@nexusforum.edu">riya.webnest@nexusforum.edu</a></p>
+        </div>
+    </div>
+
+{% endblock %}

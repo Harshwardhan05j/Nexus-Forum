@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | The Nexus Forum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --surface-2: #141414;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --purple-accent: #9333ea;
+            --purple-accent-hover: #a855f7;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-focus: #9333ea;
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html, body { height: 100%; }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        /* Flash messages */
+        .flash-stack {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 360px;
+        }
+
+        .flash-item {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .flash-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Auth card */
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 48px 40px;
+        }
+
+        /* Brand */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            margin-bottom: 40px;
+        }
+
+        .brand img { width: 28px; height: 28px; }
+
+        .brand span {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .auth-heading {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .auth-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+        }
+
+        /* SSO */
+        .sso-btn {
+            width: 100%;
+            background: var(--surface-2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 13px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background var(--transition), border-color var(--transition);
+            text-decoration: none;
+            margin-bottom: 28px;
+        }
+
+        .sso-btn:hover {
+            background: #1c1c1c;
+            border-color: rgba(255,255,255,0.14);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+
+        /* Form */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            background: var(--surface-2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 13px 16px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color var(--transition);
+            outline: none;
+        }
+
+        input::placeholder { color: rgba(161,161,170,0.5); }
+        input:focus { border-color: var(--border-focus); }
+
+        /* Terms note */
+        .terms-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 4px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .terms-note a {
+            color: var(--text-primary);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 1px;
+        }
+
+        /* Submit */
+        .btn-submit {
+            width: 100%;
+            background: var(--text-primary);
+            color: var(--obsidian);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background var(--transition);
+            margin-bottom: 28px;
+        }
+
+        .btn-submit:hover { background: #e5e5e5; }
+
+        /* Switch */
+        .switch-link {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .switch-link a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 1px;
+            transition: border-color var(--transition);
+        }
+
+        .switch-link a:hover { border-color: var(--text-primary); }
+    </style>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-stack">
+                {% for message in messages %}
+                    <div class="flash-item">
+                        <span>{{ message }}</span>
+                        <button class="flash-close" onclick="this.parentElement.remove()">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="auth-card">
+
+        <a href="{{ url_for('home') }}" class="brand">
+            <img src="{{ url_for('static', filename='NEXUS white font.png') }}" alt="Nexus logo">
+            <span>NEXUS</span>
+        </a>
+
+        <h1 class="auth-heading">Create an account</h1>
+        <p class="auth-sub">Join the Nexus Forum community today.</p>
+
+        <!-- SSO -->
+        <a href="{{ url_for('google_login') }}" class="sso-btn">
+            <i class="fa-solid fa-building-columns" style="font-size: 0.95rem;"></i>
+            Continue with SSO
+        </a>
+
+        <div class="divider"><span>or continue with email</span></div>
+
+        <!-- Signup form -->
+        <form method="POST" action="{{ url_for('signup') }}" name="signup">
+            <div class="form-group">
+                <label for="name">Full name</label>
+                <input type="text" id="name" name="name" placeholder="Your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 4px;">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Min. 8 characters" required>
+            </div>
+
+            <p class="terms-note">
+                By creating an account, you agree to our <a href="#">Terms of Service</a>.
+            </p>
+
+            <button type="submit" class="btn-submit">Create account</button>
+        </form>
+
+        <p class="switch-link">
+            Already have an account? <a href="{{ url_for('login') }}">Log in</a>
+        </p>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                document.querySelectorAll('.flash-item').forEach(function (el) {
+                    el.style.transition = 'opacity 0.4s ease';
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 400);
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

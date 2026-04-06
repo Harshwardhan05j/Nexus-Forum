@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Nexus Forum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --surface-2: #141414;
+            --surface-3: #1a1a1a;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --text-dim: #71717a;
+            --purple-accent: #9333ea;
+            --purple-muted: rgba(147, 51, 234, 0.12);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --transition: 0.18s ease;
+            --sidebar-w: 228px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { height: 100%; }
+
+        body {
+            background: var(--obsidian);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Sidebar ──────────────────────────────── */
+        .sidebar {
+            width: var(--sidebar-w);
+            flex-shrink: 0;
+            background: var(--surface-1);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 28px 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-brand img { width: 26px; height: 26px; }
+
+        .sidebar-brand span {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .sidebar-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            padding: 20px 20px 8px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 4px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 7px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item i { font-size: 0.85rem; width: 16px; text-align: center; }
+
+        .nav-item:hover {
+            background: var(--surface-2);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: var(--purple-muted);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active i { color: var(--purple-accent); }
+
+        .sidebar-footer {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        /* ── Main ─────────────────────────────────── */
+        .main {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Top Bar */
+        .topbar {
+            padding: 20px 36px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--obsidian);
+            flex-shrink: 0;
+        }
+
+        .topbar-title h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .topbar-title p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .user-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--purple-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--purple-accent);
+        }
+
+        /* Content area */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 36px;
+        }
+
+        /* Stats Strip */
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .stat-tile {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 24px 24px 20px;
+        }
+
+        .stat-tile .s-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+        }
+
+        .stat-tile .s-value {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .stat-tile .s-sub {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        /* Section */
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-head h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .count-pill {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--surface-2);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3px 10px;
+            color: var(--text-secondary);
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .data-table thead th {
+            text-align: left;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+            padding: 0 16px 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table tbody tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: background var(--transition);
+        }
+
+        .data-table tbody tr:last-child { border-bottom: none; }
+        .data-table tbody tr:hover { background: var(--surface-1); }
+
+        .data-table td {
+            padding: 14px 16px 14px 0;
+            color: var(--text-secondary);
+            vertical-align: middle;
+        }
+
+        .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-admin {
+            background: var(--purple-muted);
+            color: var(--purple-accent);
+        }
+
+        .badge-user {
+            background: rgba(255,255,255,0.04);
+            color: var(--text-dim);
+        }
+
+        .empty-state {
+            padding: 48px 0;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+        }
+
+        /* Club sub-tabs */
+        .club-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .club-tab {
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: var(--surface-1);
+            color: var(--text-secondary);
+            transition: all var(--transition);
+        }
+
+        .club-tab:hover { color: var(--text-primary); background: var(--surface-2); }
+        .club-tab.active { background: var(--purple-muted); color: var(--text-primary); border-color: transparent; }
+
+        .club-panel { display: none; }
+        .club-panel.active { display: block; }
+
+        /* Avatar initial */
+        .avatar-init {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--surface-3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-right: 8px;
+            flex-shrink: 0;
+            vertical-align: middle;
+        }
+
+        .name-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Scrollbar */
+        .content::-webkit-scrollbar { width: 4px; }
+        .content::-webkit-scrollbar-track { background: transparent; }
+        .content::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- ── Sidebar ────────────────────────────── -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <img src="{{ url_for('static', filename='NEXUS white font.png') }}" alt="Nexus">
+            <span>Nexus Admin</span>
+        </div>
+
+        <p class="sidebar-label">Navigation</p>
+
+        <div class="sidebar-nav">
+            <button class="nav-item active" id="nav-overview" onclick="switchSection('overview', this)">
+                <i class="fa-solid fa-chart-bar"></i> Overview
+            </button>
+            <button class="nav-item" id="nav-users" onclick="switchSection('users', this)">
+                <i class="fa-solid fa-users"></i> Users
+            </button>
+            <button class="nav-item" id="nav-applications" onclick="switchSection('applications', this)">
+                <i class="fa-solid fa-layer-group"></i> Applications
+            </button>
+            <button class="nav-item" id="nav-events" onclick="switchSection('events', this)">
+                <i class="fa-solid fa-calendar-check"></i> Event Regs
+            </button>
+            <button class="nav-item" id="nav-proposals" onclick="switchSection('proposals', this)">
+                <i class="fa-solid fa-file-pen"></i> Proposals
+                {% set pending_count = proposals | selectattr('status', 'equalto', 'pending') | list | length %}
+                {% if pending_count > 0 %}
+                    <span style="margin-left:auto;background:var(--purple-accent);color:white;font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:20px;">{{ pending_count }}</span>
+                {% endif %}
+            </button>
+            <button class="nav-item" id="nav-hackronyx" onclick="switchSection('hackronyx', this)">
+                <i class="fa-solid fa-code"></i> HackRonyX
+                {% if hackronyx_entries | length > 0 %}
+                    <span style="margin-left:auto;background:var(--purple-muted);color:var(--purple-accent);font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid var(--purple-accent);">{{ hackronyx_entries | length }}</span>
+                {% endif %}
+            </button>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="{{ url_for('home') }}" class="nav-item">
+                <i class="fa-solid fa-arrow-left"></i> Back to Site
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-item" style="color: #ef4444;">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </div>
+    </aside>
+
+    <!-- ── Main ──────────────────────────────── -->
+    <div class="main">
+
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-title">
+                <h1 id="current-section-title">Overview</h1>
+                <p>Nexus Forum — Admin Console</p>
+            </div>
+            <div class="topbar-user">
+                <span>{{ current_user.name }}</span>
+                <div class="user-dot">{{ current_user.name[0] | upper }}</div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="content">
+
+            <!-- ── Overview Section ── -->
+            <section class="section active" id="section-overview">
+                <div class="stats-strip">
+                    <div class="stat-tile">
+                        <div class="s-label">Total Users</div>
+                        <div class="s-value">{{ users | length }}</div>
+                        <div class="s-sub">Registered members</div>
+                    </div>
+                    <div class="stat-tile">
+                        <div class="s-label">Club Applications</div>
+                        <div class="s-value">{{ (web_nest | length) + (dsi | length) + (cc | length) }}</div>
+                        <div class="s-sub">Across all 3 clubs</div>
+                    </div>
+                    <div class="stat-tile">
+                        <div class="s-label">Event Registrations</div>
+                        <div class="s-value">{{ event_regs | length }}</div>
+                        <div class="s-sub">Across all events</div>
+                    </div>
+                    <div class="stat-tile">
+                        <div class="s-label">Event Proposals</div>
+                        <div class="s-value">{{ proposals | length }}</div>
+                        <div class="s-sub">{{ proposals | selectattr('status', 'equalto', 'pending') | list | length }} pending review</div>
+                    </div>
+                    <div class="stat-tile" style="border-color: rgba(147, 51, 234, 0.3);">
+                        <div class="s-label">HackRonyX Interest</div>
+                        <div class="s-value" style="color: var(--purple-accent);">{{ hackronyx_entries | length }}</div>
+                        <div class="s-sub">Participation willingness</div>
+                    </div>
+                </div>
+
+                <!-- Recent users quick-view -->
+                <div class="section-head">
+                    <h2>Recent Users</h2>
+                    <span class="count-pill">{{ users | length }} total</span>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users[:5] %}
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <span class="avatar-init">{{ user['name'][0] | upper }}</span>
+                                    {{ user['name'] }}
+                                </div>
+                            </td>
+                            <td>{{ user['email'] }}</td>
+                            <td>
+                                <span class="badge {{ 'badge-admin' if user['role'] == 'admin' else 'badge-user' }}">
+                                    {{ user['role'] }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% if not users %}
+                        <tr><td colspan="3" class="empty-state">No users yet.</td></tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ── Users Section ── -->
+            <section class="section" id="section-users">
+                <div class="section-head">
+                    <h2>All Users</h2>
+                    <span class="count-pill">{{ users | length }} total</span>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td style="color: var(--text-dim);">{{ user['id'] }}</td>
+                            <td>
+                                <div class="name-cell">
+                                    <span class="avatar-init">{{ user['name'][0] | upper }}</span>
+                                    {{ user['name'] }}
+                                </div>
+                            </td>
+                            <td>{{ user['email'] }}</td>
+                            <td>
+                                <span class="badge {{ 'badge-admin' if user['role'] == 'admin' else 'badge-user' }}">
+                                    {{ user['role'] }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4"><div class="empty-state">No users registered yet.</div></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ── Applications Section ── -->
+            <section class="section" id="section-applications">
+                <div class="section-head">
+                    <h2>Club Applications</h2>
+                    <span class="count-pill">{{ (web_nest | length) + (dsi | length) + (cc | length) }} total</span>
+                </div>
+
+                <div class="club-tabs">
+                    <button class="club-tab active" onclick="switchClub('webnest', this)">
+                        <i class="fa-solid fa-code" style="margin-right: 6px;"></i>Web Nest
+                        <span style="margin-left: 6px; opacity: 0.6;">({{ web_nest | length }})</span>
+                    </button>
+                    <button class="club-tab" onclick="switchClub('dsi', this)">
+                        <i class="fa-solid fa-network-wired" style="margin-right: 6px;"></i>DSI Club
+                        <span style="margin-left: 6px; opacity: 0.6;">({{ dsi | length }})</span>
+                    </button>
+                    <button class="club-tab" onclick="switchClub('cc', this)">
+                        <i class="fa-solid fa-rocket" style="margin-right: 6px;"></i>Career Catalyst
+                        <span style="margin-left: 6px; opacity: 0.6;">({{ cc | length }})</span>
+                    </button>
+                </div>
+
+                <!-- Web Nest -->
+                <div class="club-panel active" id="panel-webnest">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Applied</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reg in web_nest %}
+                            <tr>
+                                <td>
+                                    <div class="name-cell">
+                                        <span class="avatar-init">{{ reg['full_name'][0] | upper }}</span>
+                                        {{ reg['full_name'] }}
+                                    </div>
+                                </td>
+                                <td>{{ reg['email'] }}</td>
+                                <td>{{ reg['department'] }}</td>
+                                <td>Year {{ reg['year'] }}</td>
+                                <td>{{ reg['applied_on'].strftime('%d %b %Y') if reg['applied_on'] else '—' }}</td>
+                            </tr>
+                            {% else %}
+                            <tr><td colspan="5"><div class="empty-state">No applications yet.</div></td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- DSI -->
+                <div class="club-panel" id="panel-dsi">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Applied</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reg in dsi %}
+                            <tr>
+                                <td>
+                                    <div class="name-cell">
+                                        <span class="avatar-init">{{ reg['full_name'][0] | upper }}</span>
+                                        {{ reg['full_name'] }}
+                                    </div>
+                                </td>
+                                <td>{{ reg['email'] }}</td>
+                                <td>{{ reg['department'] }}</td>
+                                <td>Year {{ reg['year'] }}</td>
+                                <td>{{ reg['applied_on'].strftime('%d %b %Y') if reg['applied_on'] else '—' }}</td>
+                            </tr>
+                            {% else %}
+                            <tr><td colspan="5"><div class="empty-state">No applications yet.</div></td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Career Catalyst -->
+                <div class="club-panel" id="panel-cc">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Applied</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reg in cc %}
+                            <tr>
+                                <td>
+                                    <div class="name-cell">
+                                        <span class="avatar-init">{{ reg['full_name'][0] | upper }}</span>
+                                        {{ reg['full_name'] }}
+                                    </div>
+                                </td>
+                                <td>{{ reg['email'] }}</td>
+                                <td>{{ reg['department'] }}</td>
+                                <td>Year {{ reg['year'] }}</td>
+                                <td>{{ reg['applied_on'].strftime('%d %b %Y') if reg['applied_on'] else '—' }}</td>
+                            </tr>
+                            {% else %}
+                            <tr><td colspan="5"><div class="empty-state">No applications yet.</div></td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ── Events Section ── -->
+            <section class="section" id="section-events">
+                <div class="section-head">
+                    <h2>Event Registrations</h2>
+                    <span class="count-pill">{{ event_regs | length }} total</span>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Attendee</th>
+                            <th>Event</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Year</th>
+                            <th>Registered</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reg in event_regs %}
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <span class="avatar-init">{{ reg['full_name'][0] | upper }}</span>
+                                    {{ reg['full_name'] }}
+                                </div>
+                            </td>
+                            <td>{{ reg['event_name'] }}</td>
+                            <td>{{ reg['email'] }}</td>
+                            <td>{{ reg['phone'] }}</td>
+                            <td>Year {{ reg['year'] }}</td>
+                            <td>{{ reg['registered_on'].strftime('%d %b %Y') if reg['registered_on'] else '—' }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="6"><div class="empty-state">No event registrations yet.</div></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ── Proposals Section ── -->
+            <section class="section" id="section-proposals">
+                <div class="section-head">
+                    <h2>Event Proposals</h2>
+                    <span class="count-pill">{{ proposals | length }} total &bull; {{ proposals | selectattr('status', 'equalto', 'pending') | list | length }} pending</span>
+                </div>
+
+                <!-- Status filter badges -->
+                <div style="display:flex;gap:8px;margin-bottom:24px;">
+                    <span id="filter-all" onclick="filterProposals('all',this)" style="cursor:pointer;padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;background:var(--purple-muted);color:var(--purple-accent);border:1px solid transparent;">All</span>
+                    <span id="filter-pending" onclick="filterProposals('pending',this)" style="cursor:pointer;padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;background:var(--surface-1);color:var(--text-secondary);border:1px solid var(--border-color);">Pending</span>
+                    <span id="filter-approved" onclick="filterProposals('approved',this)" style="cursor:pointer;padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;background:var(--surface-1);color:var(--text-secondary);border:1px solid var(--border-color);">Approved</span>
+                    <span id="filter-rejected" onclick="filterProposals('rejected',this)" style="cursor:pointer;padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;background:var(--surface-1);color:var(--text-secondary);border:1px solid var(--border-color);">Rejected</span>
+                </div>
+
+                <table class="data-table" id="proposals-table">
+                    <thead>
+                        <tr>
+                            <th>Event Title</th>
+                            <th>Organizer</th>
+                            <th>Type</th>
+                            <th>Proposed Date</th>
+                            <th>Attendees</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in proposals %}
+                        <tr class="proposal-row" data-status="{{ p['status'] }}">
+                            <td>
+                                <div class="name-cell">
+                                    <span class="avatar-init">{{ p['event_title'][0] | upper }}</span>
+                                    <div>
+                                        <div style="font-weight:600;color:var(--text-primary);font-size:0.875rem;">{{ p['event_title'] }}</div>
+                                        <div style="font-size:0.78rem;color:var(--text-dim);">{{ p['club_team'] if p['club_team'] else 'Independent' }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="font-size:0.875rem;">{{ p['organizer_name'] }}</div>
+                                <div style="font-size:0.78rem;color:var(--text-dim);">{{ p['organizer_email'] }}</div>
+                            </td>
+                            <td>{{ p['event_type'] }}</td>
+                            <td>{{ p['proposed_date'].strftime('%d %b %Y') if p['proposed_date'] else '—' }}</td>
+                            <td>{{ p['expected_attendees'] }}</td>
+                            <td>
+                                {% if p['status'] == 'pending' %}
+                                    <span class="badge" style="background:rgba(234,179,8,0.12);color:#ca8a04;">Pending</span>
+                                {% elif p['status'] == 'approved' %}
+                                    <span class="badge" style="background:rgba(34,197,94,0.12);color:#16a34a;">Approved</span>
+                                {% else %}
+                                    <span class="badge" style="background:rgba(239,68,68,0.12);color:#dc2626;">Rejected</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if p['status'] == 'pending' %}
+                                <div style="display:flex;gap:8px;">
+                                    <form method="POST" action="{{ url_for('approve_proposal', proposal_id=p['id']) }}" style="margin:0;">
+                                        <button type="submit" style="padding:5px 12px;border-radius:6px;font-size:0.78rem;font-weight:600;cursor:pointer;border:none;background:rgba(34,197,94,0.15);color:#16a34a;transition:background 0.2s;" onmouseover="this.style.background='rgba(34,197,94,0.28)'" onmouseout="this.style.background='rgba(34,197,94,0.15)'">
+                                            <i class="fa-solid fa-check"></i> Approve
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('reject_proposal', proposal_id=p['id']) }}" style="margin:0;">
+                                        <button type="submit" style="padding:5px 12px;border-radius:6px;font-size:0.78rem;font-weight:600;cursor:pointer;border:none;background:rgba(239,68,68,0.12);color:#dc2626;transition:background 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.25)'" onmouseout="this.style.background='rgba(239,68,68,0.12)'">
+                                            <i class="fa-solid fa-xmark"></i> Reject
+                                        </button>
+                                    </form>
+                                </div>
+                                {% else %}
+                                    <span style="color:var(--text-dim);font-size:0.8rem;">Reviewed</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="7"><div class="empty-state">No proposals submitted yet.</div></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ── HackRonyX Section ── -->
+            <section class="section" id="section-hackronyx">
+                <div class="section-head">
+                    <h2>HackRonyX 2026 Participation Willingness</h2>
+                    <span class="count-pill">{{ hackronyx_entries | length }} total</span>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Respondent</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Mobile No.</th>
+                            <th>Applied</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in hackronyx_entries %}
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <span class="avatar-init" style="background:var(--purple-muted);color:var(--purple-accent);">{{ entry['full_name'][0] | upper }}</span>
+                                    {{ entry['full_name'] }}
+                                </div>
+                            </td>
+                            <td>{{ entry['email'] }}</td>
+                            <td>{{ entry['department'] }}</td>
+                            <td>{{ entry['mobile_no'] }}</td>
+                            <td>{{ entry['submitted_at'].strftime('%d %b %Y') if entry['submitted_at'] else '—' }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5"><div class="empty-state">No responses yet.</div></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+    <script>
+        const sectionTitles = {
+            overview: 'Overview',
+            users: 'Users',
+            applications: 'Club Applications',
+            events: 'Event Registrations',
+            proposals: 'Event Proposals',
+            hackronyx: 'HackRonyX Interest'
+        };
+
+        function switchSection(id, btn) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('section-' + id).classList.add('active');
+            btn.classList.add('active');
+            document.getElementById('current-section-title').textContent = sectionTitles[id] || id;
+        }
+
+        function switchClub(id, btn) {
+            document.querySelectorAll('.club-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.club-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('panel-' + id).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function filterProposals(status, el) {
+            document.querySelectorAll('#proposals-table .proposal-row').forEach(row => {
+                row.style.display = (status === 'all' || row.dataset.status === status) ? '' : 'none';
+            });
+            document.querySelectorAll('[id^="filter-"]').forEach(b => {
+                b.style.background = 'var(--surface-1)';
+                b.style.color = 'var(--text-secondary)';
+                b.style.borderColor = 'var(--border-color)';
+            });
+            el.style.background = 'var(--purple-muted)';
+            el.style.color = 'var(--purple-accent)';
+            el.style.borderColor = 'transparent';
+        }
+    </script>
+</body>
+</html>

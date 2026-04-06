@@ -1,0 +1,675 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Space Grotesk", "Plus Jakarta Sans", "Inter", sans-serif;
+}
+
+body {
+    font-family: "Space Grotesk", "Plus Jakarta Sans";
+    font-optical-sizing: auto;
+    font-weight: 200px;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    background-color: #050505;
+    color: white;
+    min-height: 100vh;
+}
+
+#back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.05;
+    background-color: black;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 90px;
+    font-style: normal;
+    font-weight: 200px;
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.95) 0%, rgba(30, 30, 30, 0.8) 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#logo {
+   width: 70px; 
+   height: 70px;
+   margin: 4px 0 0 15px;
+   margin-top: 10px;
+}
+
+.navbar ul{
+    list-style: none;
+    display: flex;
+    margin-top: 10px;
+}
+
+.navbar li{
+    display: flex;
+    justify-content: center;
+}
+
+.main-links {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin: 0 10px;
+    margin-top: -15px;
+    margin-left: 200px;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    padding: 9px 20px;
+    font-size: large;
+    transition: all 0.3s ease;
+}
+
+.main-links a:hover,
+.main-links a.active {
+    color: #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+.auth-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 5px 18px 50px;
+    gap: -3px;
+    top: -24px;
+    cursor: pointer;
+}
+
+.auth-links a {
+    padding: 10px 7px;
+    margin-top: 13px;
+}
+
+.auth-links span {
+    color: white;
+    padding: 12px 0;
+    margin-top: 5px;
+}
+
+#log {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 11px;
+    background-color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-size: medium;
+    font-weight: 400;
+    color: white;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#log:hover {
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+
+#signup {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 11px;
+    background-color: rgba(255, 255, 255, 0.91);
+    cursor: pointer;
+    font-size: medium;
+    font-weight: 500;
+    transition: background-color 0.25s ease;
+}
+
+#signup:hover {
+    background-color: rgb(120, 187, 255);
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 60px 25px 40px;
+    margin-top: 30px;
+    color: white;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.page-header h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFFFFF 0%, #DDDDDD 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+}
+
+.page-header p {
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* Club Info Section */
+.club-info {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 40px 20px;
+    margin-bottom: 4em;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 1300px;
+    width: 100%;
+}
+
+/* Club Card */
+.club-card {
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.9) 0%, rgba(60, 140, 200, 0.05) 100%);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.club-card:nth-child(1) { animation-delay: 0.1s; }
+.club-card:nth-child(2) { animation-delay: 0.2s; }
+.club-card:nth-child(3) { animation-delay: 0.3s; }
+
+.club-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 20px 60px rgba(255, 255, 255, 0.2);
+}
+
+/* Club Header */
+.club-header {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+}
+
+.club-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.club-card:hover .club-image {
+    transform: scale(1.05);
+}
+
+.club-title-section {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+}
+
+.club-title-section h2 {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.club-tagline {
+    font-size: 0.82em;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    line-height: 1.4;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Club Content */
+.club-content {
+    padding: 14px 18px 18px;
+}
+
+.club-section {
+    margin-bottom: 10px;
+}
+
+/* Hide all sections except About and join button */
+.club-section:not(.club-actions-wrap):not(.about-section) {
+    display: none;
+}
+
+/* Show About section with clamped text */
+.about-section {
+    display: block !important;
+    padding: 12px 4px 8px;
+}
+
+.about-section h3 {
+    display: none; /* hide the "About Us" heading label */
+}
+
+.about-section p {
+    font-size: 0.82em;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.75);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.club-actions-wrap {
+    display: flex !important;
+    justify-content: center;
+    padding: 10px 0 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 4px;
+}
+
+.club-section h3 {
+    font-size: 1.1em;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.club-section h3::before {
+    content: '';
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(135deg, #FFFFFF, #DDDDDD);
+    border-radius: 2px;
+}
+
+.club-section p {
+    font-size: 0.88em;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 300;
+}
+
+/* Activities List */
+.activities-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activities-list li {
+    font-size: 0.85em;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 7px 0 7px 28px;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.activities-list li:last-child {
+    border-bottom: none;
+}
+
+.activities-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 10px;
+    color: #FFFFFF;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.activities-list li:hover {
+    padding-left: 40px;
+    color: #FFFFFF;
+}
+
+/* Contact Section */
+.contact-section {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.2) 100%);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 15px;
+}
+
+.contact-person {
+    padding: 15px;
+    background: rgba(5, 5, 5, 0.5);
+    border-radius: 8px;
+    border-left: 3px solid #FFFFFF;
+}
+
+.contact-person p {
+    font-size: 1em;
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.contact-person strong {
+    color: #DDDDDD;
+}
+
+.contact-person a {
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-person a:hover {
+    color: #DDDDDD;
+    text-decoration: underline;
+}
+
+/* Club Actions */
+.club-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.join-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 28px;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    font-size: 0.88em;
+    font-weight: 600;
+    background: linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 100%);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.join-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.join-btn:hover::before {
+    left: 100%;
+}
+
+.join-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.5);
+    background: linear-gradient(135deg, #E0E0E0 0%, #FFFFFF 100%);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer */
+footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(5, 5, 5, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    position: relative;
+    bottom: 0;
+    margin-top: 60px;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 16px; 
+    position: relative;
+    bottom: 0;
+    padding: 2em;
+}
+
+.footer-col{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 200px;
+}
+
+.top{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    width: 35%;
+    gap: 5px;
+    text-align: left;
+    margin-right: 3em;
+}
+
+.footer .top h2 {
+    font-size: 2.5em;
+    color: #FFFFFF;
+}
+
+.f{
+    font-size: 1em;
+    font-family: "Space Grotesk", "Plus Jakarta Sans", "Inter", sans-serif;
+    font-weight: lighter;
+    display: flex;
+    flex-wrap: wrap;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.image {
+    display: flex;
+    gap: 15px;
+}
+
+.footer .top2 h3,
+.footer .top3 h3,
+.footer .top4 h3 {
+    color: #FFFFFF;
+    margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .page-header h1 {
+        font-size: 2.8em;
+    }
+    .club-title-section h2 {
+        font-size: 1.2em;
+    }
+    .club-content {
+        padding: 18px 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        height: auto;
+        flex-direction: column;
+        padding: 15px;
+    }
+    
+    .main-links {
+        margin-left: 0;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .auth-links {
+        margin: 10px 0;
+    }
+    
+    .page-header {
+        padding: 40px 15px 30px;
+    }
+    
+    .page-header h1 {
+        font-size: 2.2em;
+    }
+    
+    .page-header p {
+        font-size: 1em;
+    }
+    
+    .club-info {
+        padding: 20px 10px;
+    }
+    
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .club-header {
+        height: 220px;
+    }
+    
+    .club-title-section {
+        padding: 20px;
+    }
+    
+    .club-title-section h2 {
+        font-size: 1.6em;
+    }
+    
+    .club-tagline {
+        font-size: 0.95em;
+    }
+    
+    .club-content {
+        padding: 25px 20px;
+    }
+    
+    .club-section h3 {
+        font-size: 1.3em;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .top {
+        width: 100%;
+        align-items: center;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 1.8em;
+    }
+    
+    .club-header {
+        height: 180px;
+    }
+    
+    .club-title-section h2 {
+        font-size: 1.4em;
+    }
+    
+    .club-content {
+        padding: 20px 15px;
+    }
+    
+    .club-section h3 {
+        font-size: 1.2em;
+    }
+    
+    .club-section p,
+    .activities-list li {
+        font-size: 0.95em;
+    }
+    
+    .join-btn {
+        padding: 14px 35px;
+        font-size: 1em;
+    }
+}

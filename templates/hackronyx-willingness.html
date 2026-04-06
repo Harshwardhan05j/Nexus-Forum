@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackRonyX 2026 Participation | The Nexus Forum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --surface-2: #141414;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --purple-accent: #9333ea;
+            --purple-accent-hover: #a855f7;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-focus: #9333ea;
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--obsidian);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Blobs */
+        .ambient-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; 
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .purple-blob {
+            top: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.6) 0%, rgba(80, 20, 150, 0) 70%);
+        }
+
+        .blue-blob {
+            bottom: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(40, 100, 255, 0.4) 0%, rgba(0, 50, 200, 0) 70%);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -40px) scale(1.1); }
+        }
+
+        /* ── Nav ─────────────────────────────────────── */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            background: rgba(5,5,5,0.7);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img { width: 28px; height: 28px; }
+
+        /* ── Page Content ────────────────────────────── */
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 80px 24px 100px;
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .form-header {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .form-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple-accent);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .form-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 16px;
+            background: linear-gradient(to bottom, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ── Form Body ──────────────────────────────── */
+        .form-body {
+            background: rgba(14, 14, 14, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 48px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .form-group.full { grid-column: span 2; }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-left: 4px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            background: rgba(20, 20, 20, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all var(--transition);
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--purple-accent);
+            background: rgba(20, 20, 20, 0.8);
+            box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
+        }
+
+        textarea { resize: vertical; min-height: 100px; }
+
+        /* Custom Radio Buttons */
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            flex: 1;
+            min-width: 150px;
+            position: relative;
+        }
+
+        .radio-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-label {
+            display: block;
+            padding: 14px;
+            text-align: center;
+            background: rgba(20, 20, 20, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .radio-option input:checked + .radio-label {
+            background: rgba(147, 51, 234, 0.1);
+            border-color: var(--purple-accent);
+            color: var(--text-primary);
+        }
+
+        .radio-label:hover {
+            border-color: rgba(147, 51, 234, 0.5);
+        }
+
+        /* ── Submit Button ──────────────────────────── */
+        .btn-submit {
+            width: 100%;
+            background: var(--text-primary);
+            color: var(--obsidian);
+            border: none;
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-submit:active { transform: translateY(0); }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 650px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: span 1; }
+            .form-body { padding: 32px 24px; }
+            .form-header h1 { font-size: 2rem; }
+            nav { padding: 20px 24px; }
+        }
+
+        /* Flash Messages */
+        .flash-container {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .flash-msg {
+            background: var(--surface-2);
+            border: 1px solid var(--purple-accent);
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideDown 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* ── Scrolling Ticker ── */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(90deg, var(--purple-accent), #7928ca);
+            color: white;
+            padding: 8px 0;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            box-sizing: content-box;
+            animation: ticker 30s linear infinite;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding: 0 40px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">HackRonyX 2026: National Hackathon is Coming Soon</div>
+            <div class="ticker-item">Register Your Interest Now</div>
+            <div class="ticker-item">Exclusive Technical Collaboration</div>
+            <div class="ticker-item">Join 3000+ Innovators</div>
+            <!-- Repeat for seamlessness -->
+            <div class="ticker-item">HackRonyX 2026: National Hackathon is Coming Soon</div>
+            <div class="ticker-item">Register Your Interest Now</div>
+            <div class="ticker-item">Exclusive Technical Collaboration</div>
+            <div class="ticker-item">Join 3000+ Innovators</div>
+        </div>
+    </div>
+
+    <div class="ambient-blobs">
+        <div class="blob purple-blob"></div>
+        <div class="blob blue-blob"></div>
+    </div>
+
+    <nav>
+        <a href="{{ url_for('home') }}" class="logo">
+            <img src="{{ url_for('static', filename='NEXUS white font.png') }}" alt="Nexus">
+            NEXUS
+        </a>
+        <a href="{{ url_for('home') }}" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 500;">&larr; Back to Home</a>
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for message in messages %}
+                    <div class="flash-msg">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main class="page-wrap">
+        <div class="form-card">
+            <div class="form-header">
+                <span class="form-eyebrow">Registration Launch</span>
+                <h1>HackRonyX 2026</h1>
+                <p>Express your willingness to participate in our flagship national hackathon. Your early response helps us shape the experience.</p>
+            </div>
+
+            <div class="form-body">
+                <form method="POST">
+                    <div class="form-group full">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="email"> Email Id</label>
+                        <input type="email" id="email" name="email" placeholder="john.doe@college.edu" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="department">Department</label>
+                        <input type="text" id="department" name="department" placeholder="e.g., CSE-DS" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="mobile_no">Mobile Number</label>
+                        <input type="text" id="mobile_no" name="mobile_no" placeholder="+91 00000 00000" required>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        Submit Response <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 The Nexus Forum | HackRonyX Flagship Initiative</p>
+    </footer>
+
+    <script>
+        // Auto-hide flash messages
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashes = document.querySelectorAll('.flash-msg');
+            flashes.forEach(f => {
+                setTimeout(() => {
+                    f.style.opacity = '0';
+                    f.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => f.remove(), 500);
+                }, 4000);
+            });
+        });
+    </script>
+</body>
+</html>

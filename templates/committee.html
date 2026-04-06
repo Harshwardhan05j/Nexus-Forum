@@ -1,0 +1,534 @@
+{% extends "base.html" %}
+
+{% block title %}Steering Committee | The Nexus Forum{% endblock %}
+
+{% block additional_css %}
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --surface-2: #141414;
+            --surface-3: #1a1a1a;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --purple-accent: #9333ea;
+            --purple-accent-hover: #a855f7;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ── Buttons ─────────────────────────────────── */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+        }
+
+        .btn-ghost { color: var(--text-secondary); background: transparent; }
+        .btn-ghost:hover { color: var(--text-primary); }
+
+        .btn-primary { background: var(--text-primary); color: var(--obsidian); }
+        .btn-primary:hover { background: #e5e5e5; }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.4); }
+
+        /* ── Layout ──────────────────────────────────── */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* ── Page Header ─────────────────────────────── */
+        .page-header {
+            text-align: center;
+            padding: 100px 0 72px;
+        }
+
+        .label-minimal {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--purple-accent);
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* ── Section labels ──────────────────────────── */
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* ── Faculty Coordinator ─────────────────────── */
+        .faculty-section { margin-bottom: 96px; }
+
+        .faculty-card {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 48px;
+            max-width: 700px;
+            transition: background var(--transition);
+        }
+
+        .faculty-card:hover { background: var(--surface-2); }
+
+        .faculty-avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--surface-3);
+        }
+
+        .faculty-info h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        .faculty-info .role-tag {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--purple-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .faculty-info p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px; }
+
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color var(--transition);
+        }
+
+        .linkedin-link:hover { color: var(--text-primary); }
+
+        /* ── Members Grid ────────────────────────────── */
+        .members-section { margin-bottom: 96px; }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .member-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px 32px;
+            text-align: center;
+            transition: transform var(--transition), background var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .member-card:hover {
+            transform: translateY(-4px);
+            background: var(--surface-2);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--surface-3);
+            margin-bottom: 24px;
+        }
+
+        .member-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--purple-accent);
+            margin-bottom: 12px;
+        }
+
+        .member-bio {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        /* ── Advisory Section ────────────────────────── */
+        .advisory-section { margin-bottom: 96px; }
+
+        .advisory-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .advisory-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface-1);
+            padding: 24px 32px;
+            transition: background var(--transition);
+        }
+
+        .advisory-item:hover { background: var(--surface-2); }
+
+        .advisory-item h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .advisory-designation {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ── CTA Section ─────────────────────────────── */
+        .governance-cta {
+            background: var(--surface-1);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 120px;
+        }
+
+        .governance-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .governance-cta p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 560px;
+            margin: 0 auto 32px;
+        }
+
+        /* ── Footer ──────────────────────────────────── */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 72px 0 48px;
+            background: var(--obsidian);
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        .footer-brand-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 240px;
+            margin-bottom: 24px;
+        }
+
+        .footer-socials { display: flex; gap: 16px; }
+
+        .footer-socials a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color var(--transition);
+        }
+
+        .footer-socials a:hover { color: var(--text-primary); }
+
+        .footer-col-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #71717a;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: #71717a;
+        }
+
+        @media (max-width: 900px) {
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 900px) {
+            .members-grid { grid-template-columns: 1fr 1fr; }
+            .faculty-card { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 600px) {
+            .members-grid { grid-template-columns: 1fr; }
+            .advisory-item { flex-direction: column; align-items: flex-start; gap: 4px; }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <main>
+        <div class="container">
+
+            <!-- Header -->
+            <header class="page-header">
+                <span class="label-minimal">Leadership 2025–26</span>
+                <h1>The Steering Committee</h1>
+                <p>Meet the dedicated members who drive the Nexus Forum's vision, governance, and community initiatives forward.</p>
+            </header>
+
+            <!-- Faculty Coordinator -->
+            <section class="faculty-section">
+                <p class="section-label">Faculty Coordinator</p>
+                <div class="faculty-card">
+                    <img src="{{ url_for('static', filename='2037 - Aashish Dandekar (The Brainwaves).jpg') }}" alt="Ashish Dandekar" class="faculty-avatar">
+                    <div class="faculty-info">
+                        <h3>Ashish Dandekar</h3>
+                        <span class="role-tag">Faculty Coordinator</span>
+                        <p>Guiding excellence and fostering innovation across the Nexus Forum with deep domain expertise and a commitment to student growth.</p>
+                        <a href="https://www.linkedin.com/in/dr-aashish-r-dandekar-195b6269" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> View Profile
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Executive Committee -->
+            <section class="members-section">
+                <p class="section-label">Executive Committee</p>
+                <div class="members-grid">
+
+                    <div class="member-card">
+                        <img src="{{ url_for('static', filename='cc7.png') }}" alt="Rushabh Wakekar" class="member-avatar">
+                        <h3>Rushabh Wakekar</h3>
+                        <div class="member-role">President</div>
+                        <p class="member-bio">Leading with vision and integrity, setting strategic direction for the forum's initiatives.</p>
+                        <a href="https://www.linkedin.com/in/rushabhwakekar" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="member-card">
+                        <img src="{{ url_for('static', filename='cc2.png') }}" alt="Manjosh Lilhare" class="member-avatar">
+                        <h3>Manjosh Lilhare</h3>
+                        <div class="member-role">Vice President</div>
+                        <p class="member-bio">Driving strategic initiatives forward and supporting cross-team alignment across all club activities.</p>
+                        <a href="https://www.linkedin.com/in/manjosh-lilhare-496922291" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="member-card">
+                        <img src="{{ url_for('static', filename='cc1.png') }}" alt="Ajinkya Mariche" class="member-avatar">
+                        <h3>Ajinkya Mariche</h3>
+                        <div class="member-role">Secretary</div>
+                        <p class="member-bio">Ensuring smooth operations, communications, and coordination across all forum departments.</p>
+                        <a href="https://www.linkedin.com/in/ajinkya-mariche-1b948729a" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="member-card">
+                        <img src="{{ url_for('static', filename='cc4.png') }}" alt="Priyanshi Khadgi" class="member-avatar">
+                        <h3>Priyanshi Khadgi</h3>
+                        <div class="member-role">Joint Secretary</div>
+                        <p class="member-bio">Supporting governance, administration, and documentation processes across the forum.</p>
+                        <a href="https://www.linkedin.com/in/priyanshi-khadgi" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="member-card">
+                        <img src="{{ url_for('static', filename='cc6.png') }}" alt="Shivansh Agrawal" class="member-avatar">
+                        <h3>Shivansh Agrawal</h3>
+                        <div class="member-role">Treasurer</div>
+                        <p class="member-bio">Managing resources, budgets, and ensuring sustainable financial health for all forum events.</p>
+                        <a href="https://www.linkedin.com/in/shivansh-agrawal-51810827b" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="member-card">
+                        <img src="{{ url_for('static', filename='cc8.png') }}" alt="Harshwardhan Jadhav" class="member-avatar">
+                        <h3>Harshwardhan Jadhav</h3>
+                        <div class="member-role">Joint Treasurer</div>
+                        <p class="member-bio">Supporting financial management and assisting in budget planning for all forum activities.</p>
+                        <a href="https://www.linkedin.com/in/harshwardhan-jadhav-608847253" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="member-card">
+                        <img src="{{ url_for('static', filename='cc3.png') }}" alt="Shrenik Nil" class="member-avatar">
+                        <h3>Shrenik Nil</h3>
+                        <div class="member-role">Documentation Head</div>
+                        <p class="member-bio">Capturing moments, milestones, and maintaining the institutional memory of the Nexus Forum.</p>
+                        <a href="https://www.linkedin.com/in/shrenik-nil-b30980285" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="member-card">
+                        <img src="{{ url_for('static', filename='cc5.png') }}" alt="Mohit Gupta" class="member-avatar">
+                        <h3>Mohit Gupta</h3>
+                        <div class="member-role">Mentor</div>
+                        <p class="member-bio">Providing mentorship, strategic guidance, and technical expertise to the forum community.</p>
+                        <a href="https://www.linkedin.com/in/mohit-gupta-25-" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Advisory Board -->
+            <section class="advisory-section">
+                <p class="section-label">Club Leads & Advisory</p>
+                <div class="advisory-list">
+                    <div class="advisory-item">
+                        <h4>Nishant Gakare</h4>
+                        <span class="advisory-designation">Club Head — Web Nest Technology</span>
+                    </div>
+                    <div class="advisory-item">
+                        <h4>Vaishnav Raut</h4>
+                        <span class="advisory-designation">Co-Head — Web Nest Technology</span>
+                    </div>
+                    <div class="advisory-item">
+                        <h4>Rajat Kantode</h4>
+                        <span class="advisory-designation">Club Head — Data Science Innovation</span>
+                    </div>
+                    <div class="advisory-item">
+                        <h4>Dhanshri Wanjari</h4>
+                        <span class="advisory-designation">Co-Head — Data Science Innovation</span>
+                    </div>
+                    <div class="advisory-item">
+                        <h4>Rashika Modak</h4>
+                        <span class="advisory-designation">Club Head — Career Catalyst</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Governance CTA -->
+        <section class="governance-cta">
+            <div class="container">
+                <h2>Interested in serving?</h2>
+                <p>Applications for the next committee cycle open each academic year. Learn about governance roles and expectations before applying.</p>
+                <a href="#" class="btn btn-outline" style="padding: 12px 28px;">View Governance Documentation</a>
+            </div>
+        </section>
+{% endblock %}

@@ -1,0 +1,976 @@
+{% extends "base.html" %}
+
+{% block title %}The Nexus Forum | Data Science{% endblock %}
+
+{% block additional_css %}
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --surface-2: #141414;
+            --surface-3: #1a1a1a;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --purple-accent: #9333ea;
+            --purple-accent-hover: #a855f7;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--obsidian) !important;
+            color: var(--text-primary) !important;
+            line-height: 1.6 !important;
+            overflow-x: hidden !important;
+            display: block !important;
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        /* Ambient Background Blobs matching the reference image */
+        .ambient-blobs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120vh;
+            overflow: hidden;
+            z-index: 1; 
+            pointer-events: none;
+        }
+        
+        main, nav, .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.65;
+            animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .orange-blob {
+            top: -5%;
+            left: 20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 120, 50, 0.8) 0%, rgba(200, 50, 0, 0) 70%);
+            animation-delay: 0s;
+        }
+
+        .red-blob {
+            top: 20%;
+            left: 45%;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(255, 50, 80, 0.8) 0%, rgba(150, 0, 50, 0) 70%);
+            animation-delay: -5s;
+        }
+
+        .blue-blob {
+            top: -10%;
+            right: 0%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(40, 100, 255, 0.6) 0%, rgba(0, 50, 200, 0) 70%);
+            animation-delay: -10s;
+        }
+        
+        .purple-blob {
+            top: 50%;
+            left: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, rgba(80, 20, 150, 0) 70%);
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, -60px) scale(1.1); }
+            100% { transform: translate(-60px, 60px) scale(0.9); }
+        }
+
+        /* Nav styles provided by style.css from base.html */
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-ghost {
+            color: var(--text-secondary);
+            background: transparent;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--obsidian);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background: #e5e5e5;
+        }
+
+        .btn-accent {
+            background: var(--purple-accent);
+            color: white;
+            border: 1px solid transparent;
+        }
+
+        .btn-accent:hover {
+            background: var(--purple-accent-hover);
+        }
+
+        /* ── Scrolling Ticker ── */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(90deg, var(--purple-accent), #7928ca);
+            color: white;
+            padding: 10px 0;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            box-sizing: content-box;
+            animation: ticker 40s linear infinite;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding: 0 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        section {
+            padding: 120px 0;
+        }
+
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+            min-height: calc(100vh - 84px);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+        }
+
+        .accent {
+            color: var(--purple-accent);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 480px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .hero-visual {
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .abstract-chart {
+            width: 440px;
+            height: 440px;
+            background: var(--surface-1);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
+            gap: 16px;
+        }
+
+        .bar {
+            flex: 1;
+            background: var(--surface-2);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .bar::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface-3);
+            border-radius: 4px;
+            height: 100%;
+        }
+        
+        .bar:nth-child(1) { height: 40%; }
+        .bar:nth-child(2) { height: 70%; }
+        .bar:nth-child(3) { height: 50%; }
+        .bar:nth-child(4) { height: 90%; background: var(--purple-accent); opacity: 0.9; }
+        .bar:nth-child(4)::after { display: none; }
+        .bar:nth-child(5) { height: 60%; }
+
+        /* Stats */
+        .stats {
+            background: var(--surface-1);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 64px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Clubs */
+        .clubs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .club-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+            transition: transform var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .club-card:hover {
+            transform: translateY(-4px);
+            background: var(--surface-2);
+        }
+
+        .club-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--surface-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .club-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .club-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Events */
+        .events-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .event-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background var(--transition);
+        }
+
+        .event-card:hover {
+            background: var(--surface-2);
+        }
+
+        .event-card.main {
+            min-height: 400px;
+            background: linear-gradient(145deg, var(--surface-1) 0%, #150a21 100%);
+        }
+
+        .event-card.main:hover {
+            background: linear-gradient(145deg, var(--surface-2) 0%, #1c0e2c 100%);
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .event-date {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--purple-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .event-card h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        
+        .event-card.side h3 {
+            font-size: 1.25rem;
+        }
+
+        .event-card p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .event-side-group {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .event-card.side {
+            padding: 32px;
+            min-height: 0;
+            flex: 1;
+        }
+
+        /* CTA */
+        .final-cta {
+            text-align: center;
+            padding: 160px 0;
+        }
+
+        .final-cta h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 40px;
+        }
+
+        .final-cta .btn {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 72px 0 48px;
+            background: var(--obsidian);
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        .footer-brand-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 240px;
+            margin-bottom: 24px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-socials a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color var(--transition);
+        }
+
+        .footer-socials a:hover { color: var(--text-primary); }
+
+        .footer-col-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim, #71717a);
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-dim, #71717a);
+        }
+
+        @media (max-width: 900px) {
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* ── Legacy / Achievements Section ─────────── */
+        .legacy-section {
+            padding: 96px 0 80px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .legacy-section .section-header { margin-bottom: 56px; }
+
+        .milestones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .milestone-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 28px 24px;
+            transition: transform var(--transition), background var(--transition);
+        }
+
+        .milestone-card:hover {
+            transform: translateY(-3px);
+            background: var(--surface-2);
+        }
+
+        .milestone-year {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--purple-accent);
+            margin-bottom: 12px;
+        }
+
+        .milestone-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+        }
+
+        .milestone-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .milestone-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.04);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .gallery-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .photo-mosaic {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 180px;
+            gap: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .mosaic-item { overflow: hidden; background: var(--surface-2); }
+        .mosaic-item.tall { grid-row: span 2; }
+        .mosaic-item.wide { grid-column: span 2; }
+
+        .mosaic-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+            filter: brightness(0.82);
+        }
+
+        .mosaic-item:hover img {
+            transform: scale(1.04);
+            filter: brightness(1);
+        }
+
+        /* ── Final CTA ───────────────────────────────── */
+        .final-cta {
+            text-align: center;
+            padding: 96px 0 120px;
+        }
+
+        .final-cta h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 28px;
+        }
+
+        .btn-accent {
+            background: var(--purple-accent);
+            color: white;
+            border: 1px solid transparent;
+        }
+
+        .btn-accent:hover { background: var(--purple-accent-hover); }
+
+        @media (max-width: 900px) {
+            .hero, .events-grid { grid-template-columns: 1fr; }
+            .hero-visual { display: none; }
+            .clubs-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; gap: 48px; }
+            .hero h1 { font-size: 3rem; }
+            .milestones-grid { grid-template-columns: 1fr 1fr; }
+            .photo-mosaic { grid-template-columns: 1fr 1fr; }
+            .mosaic-item.wide { grid-column: span 1; }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">HackRonyX 2026: National Hackathon is Coming Soon &bull; Register Your Interest Now</div>
+            <div class="ticker-item">Exclusive Technical Collaboration with Industry Leaders &bull; Join 3000+ Innovators</div>
+            <div class="ticker-item">HackRonyX 2026: National Hackathon is Coming Soon &bull; Register Your Interest Now</div>
+            <div class="ticker-item">Exclusive Technical Collaboration with Industry Leaders &bull; Join 3000+ Innovators</div>
+        </div>
+    </div>
+
+    <div class="ambient-blobs">
+        <div class="blob orange-blob"></div>
+        <div class="blob red-blob"></div>
+        <div class="blob blue-blob"></div>
+        <div class="blob purple-blob"></div>
+    </div>
+
+    <!-- Nav and flash messages are handled globally by base.html -->
+
+    <main>
+        <div class="container">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>The <span class="accent">Nexus</span> Forum</h1>
+                    <p>Official Computer Science Engineering and <strong style="color: var(--text-primary); font-weight: 600;">Data Science</strong> Department Platform. A high-performance hub for technical collaboration, insights, and innovation.</p>
+                    <div class="hero-actions">
+                        <a href="{{ url_for('clubs') }}" class="btn btn-primary">Explore Clubs</a>
+                        <a href="{{ url_for('events') }}" class="btn btn-ghost">View Events &rarr;</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="abstract-chart">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="stats">
+            <div class="container stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Active Students</p>
+                </div>
+                <div class="stat-item">
+                    <h3>3</h3>
+                    <p>Specialized Clubs</p>
+                </div>
+                <div class="stat-item">
+                    <h3>12+</h3>
+                    <p>Yearly Events</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="featured-clubs">
+                <div class="section-header">
+                    <h2>Featured Clubs</h2>
+                    <p>Join specialized groups focused on modern tech stacks.</p>
+                </div>
+                <div class="clubs-grid">
+                    <div class="club-card">
+                        <div class="club-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="club-info">
+                            <h3>Web Nest</h3>
+                            <p>Full-stack development, modern web frameworks, and cloud deployment strategies.</p>
+                        </div>
+                    </div>
+                    <div class="club-card">
+                        <div class="club-icon"><i class="fa-solid fa-network-wired"></i></div>
+                        <div class="club-info">
+                            <h3>Data Science Innovation</h3>
+                            <p>Machine learning models, deep learning architectures, and data engineering.</p>
+                        </div>
+                    </div>
+                    <div class="club-card">
+                        <div class="club-icon"><i class="fa-solid fa-rocket"></i></div>
+                        <div class="club-info">
+                            <h3>Career Catalyst</h3>
+                            <p>Industry readiness, algorithmic problem solving, and technical interview prep.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="events-preview">
+                <div class="section-header">
+                    <h2>Upcoming Events</h2>
+                    <p>Technical workshops, hackathons, and guest lectures.</p>
+                </div>
+                <div class="events-grid">
+                    <div class="event-card main">
+                        <div>
+                            <div class="event-meta">
+                                <span class="event-date">June 2026</span>
+                                <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--purple-accent);margin-left:12px;">Upcoming</span>
+                            </div>
+                            <h3>HackRonyX 2026</h3>
+                            <p>The second edition of our flagship national hackathon returns. Compete, build, and innovate over 48 hours with thousands of participants from across the country.</p>
+                        </div>
+                        <div>
+                            <a href="{{ url_for('hackronyx_participation') }}" class="btn btn-primary">Mark Interest &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="event-side-group">
+                        <div class="event-card side">
+                            <div class="event-meta">
+                                <span class="event-date">Nov 02, 2026</span>
+                            </div>
+                            <h3>Intro to Neural Networks</h3>
+                            <a href="{{ url_for('events') }}" style="color: var(--text-primary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">View Details &rarr;</a>
+                        </div>
+                        <div class="event-card side">
+                            <div class="event-meta">
+                                <span class="event-date">Nov 18, 2026</span>
+                            </div>
+                            <h3>System Design Workshop</h3>
+                            <a href="{{ url_for('events') }}" style="color: var(--text-primary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">View Details &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Legacy / Achievements Section -->
+            <section class="legacy-section">
+                <div class="section-header">
+                    <span class="label-minimal">Since 2022</span>
+                    <h2>What We've Built</h2>
+                    <p>From national hackathons to department-wide events — a look at our journey.</p>
+                </div>
+
+                <!-- Milestone cards -->
+                <div class="milestones-grid">
+                    <div class="milestone-card">
+                        <div class="milestone-year">2026</div>
+                        <h4>DLL Workshop &mdash; NVIDIA Experts</h4>
+                        <p>Hosted an intensive 1-day <strong style="color:var(--text-primary)">Deep Learning Lab (DLL)</strong> workshop conducted by experts from <strong style="color:var(--text-primary)">NVIDIA</strong>, covering GPU-accelerated ML and neural network design.</p>
+                        <div class="milestone-tags">
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">NVIDIA</span>
+                            <span class="tag">Workshop</span>
+                        </div>
+                    </div>
+                    <div class="milestone-card" style="border-color: rgba(147,51,234,0.25); background: rgba(147,51,234,0.05);">
+                        <div class="milestone-year">2025</div>
+                        <h4>HackRonyX &mdash; National Hackathon</h4>
+                        <p>Organized a national-level 48-hour hackathon with <strong style="color:var(--text-primary)">3,000+ participants</strong> from colleges across India, focusing on AI, data science, and web innovation.</p>
+                        <div class="milestone-tags">
+                            <span class="tag" style="border-color:rgba(147,51,234,0.4);color:var(--purple-accent);">HackRonyX</span>
+                            <span class="tag">National</span>
+                            <span class="tag">3000+</span>
+                        </div>
+                    </div>
+                    <div class="milestone-card">
+                        <div class="milestone-year">2024</div>
+                        <h4>Data Dive Workshop Series</h4>
+                        <p>Conducted 6 hands-on workshops covering Python, ML pipelines, and data analytics with 300+ student participants from the department.</p>
+                        <div class="milestone-tags">
+                            <span class="tag">Workshop</span>
+                            <span class="tag">ML</span>
+                        </div>
+                    </div>
+                    <div class="milestone-card">
+                        <div class="milestone-year">2023</div>
+                        <h4>Inter-College Tech Fest</h4>
+                        <p>Organized a 3-day inter-college tech fest featuring competitions, project expos, and keynote sessions by industry leaders.</p>
+                        <div class="milestone-tags">
+                            <span class="tag">Tech Fest</span>
+                            <span class="tag">Inter-College</span>
+                        </div>
+                    </div>
+                    <div class="milestone-card">
+                        <div class="milestone-year">2022</div>
+                        <h4>Nexus Forum Founded</h4>
+                        <p>Established the Nexus Forum as the official Data Science Department platform, launching 3 specialized clubs from day one.</p>
+                        <div class="milestone-tags">
+                            <span class="tag">Founding</span>
+                            <span class="tag">Launch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo gallery -->
+                <div class="gallery-label">Moments from our events</div>
+                <div class="photo-mosaic">
+                    <div class="mosaic-item tall">
+                        <img src="{{ url_for('static', filename='images/showcase/IMG_6618.JPG') }}" alt="Nexus Event" loading="lazy">
+                    </div>
+                    <div class="mosaic-item">
+                        <img src="{{ url_for('static', filename='images/showcase/Picture3.jpg') }}" alt="Nexus Hackathon" loading="lazy">
+                    </div>
+                    <div class="mosaic-item">
+                        <img src="{{ url_for('static', filename='images/showcase/WhatsApp Image 2024-10-06 at 10.46.51_550c4864.jpg') }}" alt="Nexus Workshop" loading="lazy">
+                    </div>
+                    <div class="mosaic-item wide">
+                        <img src="{{ url_for('static', filename='images/showcase/WhatsApp Image 2024-10-06 at 10.52.55_59681291.jpg') }}" alt="Nexus Tech Fest" loading="lazy">
+                    </div>
+                    <div class="mosaic-item">
+                        <img src="{{ url_for('static', filename='images/showcase/WhatsApp Image 2024-10-06 at 10.52.56_a7bd7216.jpg') }}" alt="Nexus Community" loading="lazy">
+                    </div>
+                    <div class="mosaic-item">
+                        <img src="{{ url_for('static', filename='images/showcase/WhatsApp Image 2024-10-06 at 10.52.57_a2a245d4.jpg') }}" alt="Nexus Forum" loading="lazy">
+                    </div>
+                    <div class="mosaic-item">
+                        <img src="{{ url_for('static', filename='images/showcase/IMG-20240504-WA0040.jpg') }}" alt="Nexus Members" loading="lazy">
+                    </div>
+                    <div class="mosaic-item">
+                        <img src="{{ url_for('static', filename='images/showcase/Picture4.jpg') }}" alt="Nexus Events" loading="lazy">
+                    </div>
+                </div>
+            </section>
+
+            <section class="final-cta">
+                <h2>Ready to join the Nexus?</h2>
+                <a href="{{ url_for('signup') }}" class="btn btn-accent">Create an Account</a>
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <!-- Brand -->
+                <div>
+                    <p class="footer-brand-name">The Nexus Forum</p>
+                    <p class="footer-brand-desc">Official Data Science Department platform fostering innovation, collaboration, and technical excellence.</p>
+                    <div class="footer-socials">
+                        <a href="#" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.linkedin.com/company/nexusds/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/nexus.ds.forum" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <!-- Platform -->
+                <div>
+                    <p class="footer-col-title">Platform</p>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                        <li><a href="{{ url_for('clubs') }}">Clubs</a></li>
+                        <li><a href="{{ url_for('events') }}">Events</a></li>
+                        <li><a href="{{ url_for('committee') }}">Committee</a></li>
+                    </ul>
+                </div>
+                <!-- Legal -->
+                <div>
+                    <p class="footer-col-title">Legal</p>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="https://www.stvincentngp.edu.in/" target="_blank">Visit College</a></li>
+                        <li><a href="https://www.stvincentngp.edu.in/contact-us" target="_blank">Contact Us</a></li>
+                    </ul>
+                </div>
+                <!-- Connect -->
+                <div>
+                    <p class="footer-col-title">Connect</p>
+                    <ul class="footer-links">
+                        <li><a href="https://www.instagram.com/nexus.ds.forum" target="_blank">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com/company/nexusds/" target="_blank">LinkedIn</a></li>
+                        <li><a href="{{ url_for('signup') }}">Join Nexus</a></li>
+                        <li><a href="{{ url_for('login') }}">Sign In</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 The Nexus Forum. All rights reserved.</span>
+                <span>CSE – Data Science Department</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Auto-remove flash messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const flashMessages = document.querySelectorAll('.flash-message, div[style*="z-index: 1000"] > div');
+                flashMessages.forEach(function(message) {
+                    message.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateY(-10px)';
+                    setTimeout(() => message.remove(), 500);
+                });
+            }, 5000);
+        });
+    </script>
+{% endblock %}

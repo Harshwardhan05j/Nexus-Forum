@@ -1,0 +1,492 @@
+{% extends "base.html" %}
+
+{% block title %}Nexus Events | The Nexus Forum{% endblock %}
+
+{% block additional_css %}
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --surface-2: #141414;
+            --surface-3: #1a1a1a;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --purple-accent: #9333ea;
+            --purple-accent-hover: #a855f7;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-ghost {
+            color: var(--text-secondary);
+            background: transparent;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--obsidian);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background: #e5e5e5;
+        }
+
+        .btn-accent {
+            background: var(--purple-accent);
+            color: white;
+            border: 1px solid transparent;
+        }
+
+        .btn-accent:hover {
+            background: var(--purple-accent-hover);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* Events Header */
+        .events-header {
+            text-align: center;
+            padding: 100px 0 60px;
+        }
+        
+        .label-minimal {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--purple-accent);
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+        
+        .events-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+        
+        .events-header p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        /* Featured Event */
+        .featured-event {
+            display: flex;
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 64px;
+            gap: 48px;
+            transition: transform var(--transition);
+        }
+
+        .featured-event:hover {
+            background: var(--surface-2);
+        }
+
+        .featured-image {
+            flex: 1.1;
+            min-height: 480px;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            flex: 1;
+            padding: 48px 48px 48px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .event-date {
+            color: var(--purple-accent);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .featured-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .featured-content p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .featured-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Filters */
+        .filters-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+            gap: 24px;
+        }
+        
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 320px;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        
+        .search-bar input {
+            width: 100%;
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px 12px 48px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--text-secondary);
+            background: var(--surface-2);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .filter-btn {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            color: var(--obsidian);
+            background: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* Events Grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 120px;
+        }
+
+        .event-card {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px 32px;
+            transition: transform var(--transition), background var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+            background: var(--surface-2);
+        }
+
+        .event-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 12px;
+        }
+
+        .event-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            flex: 1;
+        }
+
+        .event-footer {
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Final CTA Section */
+        .host-event-cta {
+            background: var(--surface-1);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 120px;
+        }
+
+        .host-event-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .host-event-cta p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 72px 0 48px;
+            background: var(--obsidian);
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        .footer-brand-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 240px;
+            margin-bottom: 24px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-socials a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color var(--transition);
+        }
+
+        .footer-socials a:hover { color: var(--text-primary); }
+
+        .footer-col-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #71717a;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: #71717a;
+        }
+
+        @media (max-width: 900px) {
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 900px) {
+            .featured-event { flex-direction: column; gap: 0; }
+            .featured-image { min-height: 300px; }
+            .featured-content { padding: 32px; }
+            .filters-section { flex-direction: column; align-items: stretch; }
+            .search-bar { max-width: 100%; }
+            .events-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+{% set fallback_img = url_for('static', filename='4167275_18770.jpg') %}
+
+    <main>
+        <div class="container">
+            <!-- Header -->
+            <header class="events-header">
+            <span class="label-minimal">Connect & Learn</span>
+            <h1>Upcoming Events</h1>
+            <p>Participate in hands-on workshops, competitive hackathons, and technical summits designed for deep skill building and networking.</p>
+        </header>
+
+        <!-- Featured Event -->
+        <section class="featured-event">
+            <div class="featured-image">
+                <img src="{{ url_for('static', filename='images/events/event1.png') }}" alt="Data Dive Masterclass" onerror="this.src='{{ fallback_img }}'; this.onerror=null;">
+            </div>
+            <div class="featured-content">
+                <div class="event-date"><i class="fa-regular fa-calendar"></i> Aug 31, 2026</div>
+                <h2>Data Dive Masterclass</h2>
+                <p>Join us for an intensive, hands-on data analytics experience. You'll tackle real-world datasets, build predictive models, and uncover hidden insights globally utilizing modern MLOps pipelines.</p>
+                <div class="featured-actions">
+                    <a href="{{url_for('event_register', event_name='Data Dive')}}" class="btn btn-accent">Register Now</a>
+                    <a href="#" class="btn btn-ghost">View Schedule &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="filters-section">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search events...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active">All Events</button>
+                <button class="filter-btn">Workshops</button>
+                <button class="filter-btn">Seminars</button>
+                <button class="filter-btn">Hackathons</button>
+                <a href="{{ url_for('submit_event_proposal') }}" class="btn btn-ghost" style="margin-left: 12px; font-size: 0.85rem; border: 1px dashed var(--border-color); border-radius: 6px; color: var(--purple-accent);">+ Propose Event</a>
+            </div>
+        </section>
+
+        <!-- Grid -->
+        <section class="events-grid">
+            <!-- Event Card 1 -->
+            <div class="event-card">
+                <div class="event-date"><i class="fa-regular fa-calendar"></i> Sep 15, 2026</div>
+                <h3>Data Hackathon v2.0</h3>
+                <p>Collaborate, innovate, and solve intense data challenges in a high-energy 48-hour hackathon. Great prizes and cloud credits for winners.</p>
+                <div class="event-footer">
+                    <a href="{{url_for('event_register', event_name='Data Hackathon')}}" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Register Now</a>
+                </div>
+            </div>
+
+            <!-- Event Card 2 -->
+            <div class="event-card">
+                <div class="event-date"><i class="fa-regular fa-calendar"></i> Oct 02, 2026</div>
+                <h3>Neural Networks Seminar</h3>
+                <p>An in-depth exploration of deep learning architectures, backward propagation algorithms, and optimizing neural networks for scale.</p>
+                <div class="event-footer">
+                    <a href="{{url_for('event_register', event_name='Neural Networks Seminar')}}" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Register Now</a>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="event-card">
+                <div class="event-date"><i class="fa-regular fa-calendar"></i> Oct 28, 2026</div>
+                <h3>System Design Workshop</h3>
+                <p>Learn how to architect large-scale distributed systems, handle massive throughput efficiently, and ensure system-wide fault tolerance.</p>
+                <div class="event-footer">
+                    <a href="{{url_for('event_register', event_name='System Design Workshop')}}" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Register Now</a>
+                </div>
+            </div>
+            </section>
+        </div>
+
+        <!-- Host an Event CTA -->
+        <section class="host-event-cta">
+            <div class="container">
+                <span class="label-minimal">Collaborate & Lead</span>
+                <h2>Have an Idea for an Event?</h2>
+                <p>We're always looking for new ideas and passionate organizers. Submit your event proposal and our team will help you bring it to life.</p>
+                <a href="{{ url_for('submit_event_proposal') }}" class="btn btn-accent" style="padding: 14px 32px; font-size: 1rem;">Submit Your Proposal &rarr;</a>
+            </div>
+        </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,527 @@
+{% extends "base.html" %}
+
+{% block title %}Nexus Clubs | The Nexus Forum{% endblock %}
+
+{% block additional_css %}
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --surface-2: #141414;
+            --surface-3: #1a1a1a;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --purple-accent: #9333ea;
+            --purple-accent-hover: #a855f7;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --transition: 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-ghost {
+            color: var(--text-secondary);
+            background: transparent;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--obsidian);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background: #e5e5e5;
+        }
+
+        .btn-accent {
+            background: var(--purple-accent);
+            color: white;
+            border: 1px solid transparent;
+        }
+
+        .btn-accent:hover {
+            background: var(--purple-accent-hover);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* Clubs Header */
+        .clubs-header {
+            text-align: center;
+            padding: 100px 0 60px;
+        }
+        
+        .label-minimal {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--purple-accent);
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+        
+        .clubs-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+        
+        .clubs-header p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Filters */
+        .filters-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+            gap: 24px;
+        }
+        
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 320px;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        
+        .search-bar input {
+            width: 100%;
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px 12px 48px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--text-secondary);
+            background: var(--surface-2);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .filter-btn {
+            background: var(--surface-1);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            color: var(--obsidian);
+            background: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* Grid */
+        .clubs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 120px;
+        }
+
+        .club-card {
+            background: var(--surface-1);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform var(--transition), background var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .club-card:hover {
+            transform: translateY(-4px);
+            background: var(--surface-2);
+        }
+
+        .club-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .club-content {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .club-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .club-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .club-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .member-count {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .club-card.add-club {
+            background: transparent;
+            border: 1px dashed var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 480px;
+            cursor: pointer;
+        }
+        
+        .club-card.add-club:hover {
+            border-color: var(--text-primary);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .add-content {
+            text-align: center;
+            color: var(--text-secondary);
+            transition: color var(--transition);
+        }
+        
+        .add-content i {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        
+        .club-card.add-club:hover .add-content {
+            color: var(--text-primary);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: var(--surface-1);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 80px 0;
+            margin-bottom: 120px;
+        }
+
+        .newsletter-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        .nw-text h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .nw-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .nw-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nw-form input {
+            flex: 1;
+            background: var(--surface-2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 14px 20px;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+        
+        .nw-form input:focus {
+            outline: none;
+            border-color: var(--text-secondary);
+        }
+
+        .nw-graphic {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .abstract-waves {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .wave-line {
+            width: 2px;
+            background: var(--text-secondary);
+            border-radius: 2px;
+            opacity: 0.2;
+            transition: height 0.3s ease;
+        }
+
+        .wave-line:nth-child(1) { height: 20%; }
+        .wave-line:nth-child(2) { height: 40%; }
+        .wave-line:nth-child(3) { height: 60%; }
+        .wave-line:nth-child(4) { height: 80%; background: var(--purple-accent); opacity: 0.8; }
+        .wave-line:nth-child(5) { height: 100%; }
+        .wave-line:nth-child(6) { height: 70%; }
+        .wave-line:nth-child(7) { height: 50%; }
+        .wave-line:nth-child(8) { height: 30%; }
+
+        .abstract-waves:hover .wave-line:nth-child(4) { height: 100%; }
+        .abstract-waves:hover .wave-line:nth-child(5) { height: 80%; }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 72px 0 48px;
+            background: var(--obsidian);
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        .footer-brand-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 240px;
+            margin-bottom: 24px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-socials a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color var(--transition);
+        }
+
+        .footer-socials a:hover { color: var(--text-primary); }
+
+        .footer-col-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #71717a;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: #71717a;
+        }
+
+        @media (max-width: 900px) {
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 900px) {
+            .filters-section { flex-direction: column; align-items: stretch; }
+            .search-bar { max-width: 100%; }
+            .clubs-grid { grid-template-columns: 1fr; }
+            .newsletter-container { grid-template-columns: 1fr; }
+            .nw-graphic { display: none; }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <main class="container">
+        <header class="clubs-header">
+            <span class="label-minimal">Explore</span>
+            <h1>Nexus Clubs</h1>
+            <p>Discover specialized groups focused on modern tech stacks, collaboration, and industry readiness.</p>
+        </header>
+
+        <section class="filters-section">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search clubs...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Software</button>
+                <button class="filter-btn">AI/ML</button>
+                <button class="filter-btn">Data Science</button>
+            </div>
+        </section>
+
+        <section class="clubs-grid">
+            <!-- Club Card 1 -->
+            <div class="club-card">
+                <img src="{{ url_for('static', filename='1000100511hosodud.jpg') }}" alt="Web Nest Technology Club" class="club-image">
+                <div class="club-content">
+                    <h3 class="club-name">Web Nest</h3>
+                    <p class="club-desc">Foster innovation and technical excellence by diving into modern web development, scalable frameworks, and cloud deployment.</p>
+                    <div class="club-meta">
+                        <div class="member-count"><i class="fa-solid fa-users"></i> 124 Members</div>
+                        <a href="{{ url_for('webnest') }}" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Explore</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Club Card 2 -->
+            <div class="club-card">
+                <img src="{{ url_for('static', filename='4167275_18770.jpg') }}" alt="Data Science Innovation Club" class="club-image">
+                <div class="club-content">
+                    <h3 class="club-name">Data Science Innovation</h3>
+                    <p class="club-desc">Turn data into insights. Hands-on Machine Learning, AI architectures, and deep neural networks applied to real datasets.</p>
+                    <div class="club-meta">
+                        <div class="member-count"><i class="fa-solid fa-users"></i> 189 Members</div>
+                        <a href="{{ url_for('dsi') }}" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Explore</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Club Card 3 -->
+            <div class="club-card">
+                <img src="{{ url_for('static', filename='14140043_5384286.jpg') }}" alt="Career Catalyst Club" class="club-image">
+                <div class="club-content">
+                    <h3 class="club-name">Career Catalyst</h3>
+                    <p class="club-desc">Achieve absolute industry-readiness through algorithmic problem solving, mock interviews, and advanced competitive programming.</p>
+                    <div class="club-meta">
+                        <div class="member-count"><i class="fa-solid fa-users"></i> 210 Members</div>
+                        <a href="{{ url_for('cc') }}" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Explore</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Club Placeholder -->
+            <div class="club-card add-club">
+                <div class="add-content">
+                    <i class="fa-solid fa-plus"></i>
+                    <h4>Propose a New Club</h4>
+                </div>
+            </div>
+        </section>
+{% endblock %}

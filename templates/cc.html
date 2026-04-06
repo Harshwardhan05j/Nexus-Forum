@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Career Catalyst Club | The Nexus Forum{% endblock %}
+
+{% block additional_css %}
+    <link rel="stylesheet" href="{{url_for('static', filename='career.css')}}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Career Catalyst Club</h1>
+        <p>Empowering students to achieve their academic and professional ambitions</p>
+    </div>
+
+    <div class="container">
+        <div class="about-section" id="about">
+            <h2>About Us</h2>
+            <p>
+                <strong>Career Catalyst</strong> is a vibrant club under the Nexus Forum. We empower students to achieve their academic and professional ambitions by focusing on higher studies, pursuing global opportunities, and preparing for key entrance and competitive exams.
+            </p>
+
+            <h2>Our Vision</h2>
+            <p>
+                Ignite ambition and spark opportunities by bridging the gap between academic learning and career success.
+            </p>
+
+            <h2>Activities</h2>
+            <ul>
+                <li>Workshops on Resume Building and Interview Techniques</li>
+                <li>Career Guidance Sessions with Industry Experts</li>
+                <li>Networking Events and Alumni Talks</li>
+                <li>Internship and Placement Preparation</li>
+                <li>Soft Skills & Leadership Development</li>
+            </ul>
+        </div>
+
+        <div class="join-section" id="join">
+            <h2>Join Us</h2>
+            <p>
+                Ready to accelerate your career journey? Become a member of Career Catalyst!
+            </p>
+            <a href="{{url_for('join_club', club_name='Career Catalyst')}}"><button class="join-btn">Join Now</button></a>
+        </div>
+
+        <div class="contact-section" id="contact">
+            <h2>Contact</h2>
+            <p><strong>Club Head:</strong> Rajat Kantode 
+            <br>Email: <a href="mailto:rajat@nexusforum.edu">rajat@nexusforum.edu</a></p>
+
+            <p><strong>Co-Head:</strong> Rashika Modak
+            <br>Email: <a href="mailto:rashika@nexusforum.edu">rashika@nexusforum.edu</a></p>
+        </div>
+    </div>
+
+{% endblock %}

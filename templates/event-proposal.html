@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Event Proposal | The Nexus Forum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --surface-2: #141414;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --purple-accent: #9333ea;
+            --border-color: rgba(255,255,255,0.06);
+            --border-focus: #9333ea;
+            --transition: 0.2s ease;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+        body { background:var(--obsidian); color:var(--text-primary); min-height:100vh; display:flex; flex-direction:column; }
+
+        /* Nav */
+        nav { display:flex; justify-content:space-between; align-items:center; padding:24px 48px; background:rgba(5,5,5,0.7); backdrop-filter:blur(16px); position:sticky; top:0; z-index:100; border-bottom:1px solid var(--border-color); }
+        .logo { font-weight:700; font-size:1.1rem; color:var(--text-primary); text-decoration:none; display:flex; align-items:center; gap:10px; }
+        .logo img { width:28px; height:28px; }
+        .nav-links { display:flex; gap:28px; }
+        .nav-links a { color:var(--text-secondary); text-decoration:none; font-size:0.875rem; font-weight:500; transition:color var(--transition); }
+        .nav-links a:hover, .nav-links a.active { color:var(--text-primary); }
+        .auth-buttons { display:flex; gap:12px; }
+        .btn { padding:9px 18px; border-radius:6px; font-size:0.875rem; font-weight:500; text-decoration:none; transition:all var(--transition); border:none; cursor:pointer; }
+        .btn-ghost { color:var(--text-secondary); background:transparent; }
+        .btn-ghost:hover { color:var(--text-primary); }
+        .btn-solid { background:var(--text-primary); color:var(--obsidian); }
+        .btn-solid:hover { background:#e5e5e5; }
+
+        /* Flash */
+        .flash-stack { position:fixed; top:88px; right:32px; z-index:200; display:flex; flex-direction:column; gap:10px; max-width:340px; }
+        .flash-item { background:var(--surface-1); border:1px solid var(--border-color); color:var(--text-primary); padding:14px 18px; border-radius:8px; font-size:0.875rem; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+        .flash-close { background:none; border:none; color:var(--text-secondary); cursor:pointer; }
+
+        /* Page */
+        .page-wrap { flex:1; display:flex; justify-content:center; padding:72px 24px 96px; }
+        .form-card { width:100%; max-width:640px; }
+
+        .back-link { display:inline-flex; align-items:center; gap:8px; color:var(--text-secondary); text-decoration:none; font-size:0.82rem; font-weight:500; margin-bottom:28px; transition:color var(--transition); }
+        .back-link:hover { color:var(--text-primary); }
+
+        .form-eyebrow { font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--purple-accent); margin-bottom:12px; display:block; }
+
+        .form-header { margin-bottom:36px; }
+        .form-header h1 { font-size:2rem; font-weight:700; letter-spacing:-0.03em; margin-bottom:10px; }
+        .form-header p { color:var(--text-secondary); font-size:0.9rem; line-height:1.6; }
+
+        /* Steps indicator */
+        .form-steps { display:flex; gap:0; margin-bottom:36px; }
+        .step-item { flex:1; padding-bottom:10px; border-bottom:2px solid var(--border-color); font-size:0.78rem; color:var(--text-secondary); }
+        .step-item.active { border-color:var(--purple-accent); color:var(--purple-accent); font-weight:600; }
+        .step-item.done { border-color:rgba(147,51,234,0.35); }
+
+        /* Form body */
+        .form-body { background:var(--surface-1); border:1px solid var(--border-color); border-radius:12px; padding:40px; }
+
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:22px; }
+        .form-group { display:flex; flex-direction:column; gap:6px; margin-bottom:22px; }
+        .form-group:last-of-type { margin-bottom:0; }
+
+        label { font-size:0.8rem; font-weight:500; color:var(--text-secondary); letter-spacing:0.02em; }
+
+        input[type="text"], input[type="email"], input[type="date"], input[type="number"],
+        select, textarea {
+            width:100%; background:var(--surface-2); border:1px solid var(--border-color); border-radius:8px;
+            padding:12px 14px; color:var(--text-primary); font-family:inherit; font-size:0.9rem;
+            transition:border-color var(--transition); outline:none; resize:vertical;
+        }
+        input::placeholder, textarea::placeholder { color:rgba(161,161,170,0.45); }
+        input:focus, select:focus, textarea:focus { border-color:var(--border-focus); }
+        select option { background:var(--surface-2); color:var(--text-primary); }
+
+        .divider { height:1px; background:var(--border-color); margin:28px 0; }
+        .subsection-label { font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-secondary); margin-bottom:20px; }
+
+        /* Actions */
+        .form-actions { display:flex; gap:16px; align-items:center; margin-top:32px; padding-top:28px; border-top:1px solid var(--border-color); }
+        .btn-submit { flex:1; background:var(--purple-accent); color:white; border:none; border-radius:8px; padding:13px; font-family:inherit; font-size:0.95rem; font-weight:600; cursor:pointer; transition:background var(--transition); }
+        .btn-submit:hover { background:#a855f7; }
+        .btn-cancel { padding:13px 20px; border-radius:8px; font-size:0.9rem; font-weight:500; color:var(--text-secondary); text-decoration:none; border:1px solid var(--border-color); background:transparent; transition:all var(--transition); white-space:nowrap; }
+        .btn-cancel:hover { color:var(--text-primary); border-color:rgba(255,255,255,0.15); }
+
+        /* Footer */
+        footer { border-top:1px solid var(--border-color); padding:40px 48px; background:var(--obsidian); }
+        .footer-bottom { display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:#71717a; max-width:1200px; margin:0 auto; }
+        .footer-socials { display:flex; gap:20px; }
+        .footer-socials a { color:#71717a; text-decoration:none; font-size:1rem; transition:color var(--transition); }
+        .footer-socials a:hover { color:var(--text-primary); }
+
+        @media (max-width:640px) {
+            nav { padding:20px 24px; }
+            .nav-links { display:none; }
+            .form-body { padding:28px 20px; }
+            .form-row { grid-template-columns:1fr; }
+            .form-actions { flex-direction:column; }
+            .btn-cancel { width:100%; text-align:center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="{{ url_for('home') }}" class="logo">
+            <img src="{{ url_for('static', filename='NEXUS white font.png') }}" alt="Nexus"> NEXUS
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('clubs') }}">Clubs</a>
+            <a href="{{ url_for('events') }}" class="active">Events</a>
+            <a href="{{ url_for('committee') }}">Committee</a>
+        </div>
+        <div class="auth-buttons">
+            {% if current_user %}
+                <span style="color:var(--text-secondary);font-size:0.875rem;">{{ current_user.name }}</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-ghost">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-ghost">Log in</a>
+                <a href="{{ url_for('signup') }}" class="btn btn-solid">Sign up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-stack">
+                {% for message in messages %}
+                    <div class="flash-item">
+                        <span>{{ message }}</span>
+                        <button class="flash-close" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="page-wrap">
+        <div class="form-card">
+
+            <a href="{{ url_for('events') }}" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Back to Events
+            </a>
+
+            <div class="form-steps">
+                <div class="step-item active">1 &nbsp; Proposal Details</div>
+                <div class="step-item" style="flex:0;padding:0 24px;"></div>
+                <div class="step-item">2 &nbsp; Review &amp; Submit</div>
+            </div>
+
+            <div class="form-header">
+                <span class="form-eyebrow">Event Proposal</span>
+                <h1>Host Your Own Event</h1>
+                <p>Share your idea with the Nexus Team. All proposals are reviewed by the admin and you'll be contacted within 3–5 working days.</p>
+            </div>
+
+            <div class="form-body">
+                <form method="POST" action="{{ url_for('submit_event_proposal') }}">
+
+                    <!-- Organizer Info -->
+                    <p class="subsection-label">Organizer Information</p>
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="organizer_name">Full Name</label>
+                            <input type="text" id="organizer_name" name="organizer_name" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="organizer_email">Email Address</label>
+                            <input type="email" id="organizer_email" name="organizer_email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Event Details -->
+                    <p class="subsection-label">Event Details</p>
+                    <div class="form-group">
+                        <label for="event_title">Event Title</label>
+                        <input type="text" id="event_title" name="event_title" placeholder="e.g. Workshop on Computer Vision" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="event_type">Event Type</label>
+                            <select id="event_type" name="event_type" required>
+                                <option value="">Select type</option>
+                                <option value="Workshop">Workshop</option>
+                                <option value="Seminar">Seminar</option>
+                                <option value="Hackathon">Hackathon</option>
+                                <option value="Talk / Guest Lecture">Talk / Guest Lecture</option>
+                                <option value="Competition">Competition</option>
+                                <option value="Expo / Exhibition">Expo / Exhibition</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="proposed_date">Proposed Date</label>
+                            <input type="date" id="proposed_date" name="proposed_date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="margin-top:22px;">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="expected_attendees">Expected Attendees</label>
+                            <input type="number" id="expected_attendees" name="expected_attendees" placeholder="e.g. 100" min="1" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="venue_needed">Venue / Mode</label>
+                            <select id="venue_needed" name="venue_needed" required>
+                                <option value="">Select option</option>
+                                <option value="Online">Online</option>
+                                <option value="On-Campus Venue Needed">On-Campus Venue Needed</option>
+                                <option value="Arranging Own Venue">Arranging Own Venue</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Description -->
+                    <p class="subsection-label">Proposal Description</p>
+                    <div class="form-group">
+                        <label for="description">What is this event about?</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Describe the event, its goals, topics covered, and why it would benefit the community..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="club_team">Your Club / Team (if any)</label>
+                        <input type="text" id="club_team" name="club_team" placeholder="e.g. Web Nest Technology Club, or leave blank if independent">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">
+                            <i class="fa-solid fa-paper-plane" style="margin-right:8px;"></i> Submit Proposal
+                        </button>
+                        <a href="{{ url_for('events') }}" class="btn-cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-bottom">
+            <span>&copy; 2026 The Nexus Forum. All rights reserved.</span>
+            <div class="footer-socials">
+                <a href="https://www.instagram.com/nexus.ds.forum" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/nexusds/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                document.querySelectorAll('.flash-item').forEach(function (el) {
+                    el.style.transition = 'opacity 0.4s ease';
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 400);
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

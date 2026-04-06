@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Data Science Innovation Club | The Nexus Forum{% endblock %}
+
+{% block additional_css %}
+    <link rel="stylesheet" href="{{url_for('static', filename='dsi.css')}}"/>
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Data Science Innovation Club</h1>
+        <p>Turning data into insights through machine learning, AI, and analytics</p>
+    </div>
+
+    <div class="container">
+        <div class="about-section" id="about">
+            <h2>About Us</h2>
+            <p>
+                <strong>Data Science Innovation Club</strong> is a cutting-edge club under the Nexus Forum. We are dedicated to exploring the vast world of data science, machine learning, artificial intelligence, and big data analytics. Our mission is to transform raw data into meaningful insights that drive innovation and solve real-world problems.
+            </p>
+
+            <h2>Activities</h2>
+            <ul>
+                <li>Hands-on Machine Learning workshops with real datasets</li>
+                <li>Data visualization competitions using Python and R</li>
+                <li>AI/ML project showcases and hackathons</li>
+                <li>Industry expert talks on data science trends</li>
+                <li>Kaggle competitions and collaborative learning</li>
+                <li>Research paper discussions and presentations</li>
+                <li>Data preprocessing and feature engineering sessions</li>
+                <li>Cloud computing and MLOps workshops</li>
+            </ul>
+        </div>
+
+        <div class="join-section" id="join">
+            <h2>Join Us</h2>
+            <p>
+                Ready to dive into the world of data science and AI? Join our community of passionate data enthusiasts and start building the future with data!
+            </p>
+            <a href="{{url_for('join_club', club_name='Data Science Innovation Club')}}"><button class="join-btn">Join DSI Club</button></a>
+        </div>
+
+        <div class="contact-section" id="contact">
+            <h2>Contact</h2>
+            <p><strong>Club Head:</strong> Priya Sharma 
+            <br>Email: <a href="mailto:priya@nexusforum.edu">priya@nexusforum.edu</a></p>
+
+            <p><strong>Technical Lead:</strong> Dhanshri Wanjari
+            <br>Email: <a href="mailto:arjun@nexusforum.edu">arjun@nexusforum.edu</a></p>
+        </div>
+    </div>
+
+{% endblock %}

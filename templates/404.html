@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | The Nexus Forum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='NEXUS white font.png') }}">
+
+    <style>
+        :root {
+            --obsidian: #050505;
+            --surface-1: #0e0e0e;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a1a1aa;
+            --text-dim: #52525b;
+            --purple-accent: #9333ea;
+            --border-color: rgba(255, 255, 255, 0.06);
+            --transition: 0.2s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        html, body {
+            height: 100%;
+            background: var(--obsidian);
+            color: var(--text-primary);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 48px 24px;
+            text-align: center;
+        }
+
+        /* Large number */
+        .error-number {
+            font-size: clamp(7rem, 20vw, 14rem);
+            font-weight: 700;
+            letter-spacing: -0.06em;
+            line-height: 1;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+            /* subtle interior highlight */
+            background: linear-gradient(180deg, #71717a 0%, #3f3f46 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .error-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--purple-accent);
+            margin-bottom: 16px;
+        }
+
+        .error-title {
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .error-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 440px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--obsidian);
+        }
+
+        .btn-primary:hover { background: #e5e5e5; }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            color: var(--text-primary);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        /* Divider line above */
+        .divider-line {
+            width: 48px;
+            height: 1px;
+            background: var(--border-color);
+            margin: 0 auto 32px;
+        }
+
+        /* Footer note */
+        .footer-note {
+            position: fixed;
+            bottom: 32px;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        .footer-note a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .footer-note a:hover { color: var(--text-primary); }
+    </style>
+</head>
+<body>
+
+    <p class="error-label">Error 404</p>
+    <div class="error-number">404</div>
+    <div class="divider-line"></div>
+    <h1 class="error-title">Page not found</h1>
+    <p class="error-desc">The page you're looking for was moved, removed, or never existed in this dimension. Let's get you back to the forum.</p>
+
+    <div class="actions">
+        <a href="{{ url_for('home') }}" class="btn btn-primary">Return Home</a>
+        <a href="{{ url_for('events') }}" class="btn btn-outline">View Events</a>
+    </div>
+
+    <p class="footer-note">
+        &copy; 2026 <a href="{{ url_for('home') }}">The Nexus Forum</a>
+    </p>
+
+</body>
+</html>
