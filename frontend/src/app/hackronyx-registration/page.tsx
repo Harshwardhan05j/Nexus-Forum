@@ -9,12 +9,17 @@ export default function HackronyxRegistration() {
     full_name: '',
     email: '',
     department: '',
-    mobile_no: ''
+    year: '',
+    clg: '',
+    state: '',
+    city: '',
+    mobile_no: '',
+    otherDepartment: ''
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -23,10 +28,15 @@ export default function HackronyxRegistration() {
     setStatus('loading');
 
     try {
+      const submissionData = {
+        ...formData,
+        department: formData.department === 'Other' ? formData.otherDepartment : formData.department
+      };
+
       const response = await fetch('/api/register-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(submissionData)
       });
 
       const result = await response.json();
@@ -78,48 +88,155 @@ export default function HackronyxRegistration() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label htmlFor="full_name" className="text-xs font-semibold text-zinc-400 ml-1">Full Name</label>
+                  <input 
+                    id="full_name"
+                    type="text" 
+                    name="full_name"
+                    placeholder="John Doe"
+                    required
+                    value={formData.full_name}
+                    onChange={handleChange}
+                    className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-xs font-semibold text-zinc-400 ml-1">Email Id</label>
+                  <input 
+                    id="email"
+                    type="email" 
+                    name="email"
+                    placeholder="john.doe@college.edu"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label htmlFor="department" className="text-xs font-semibold text-zinc-400 ml-1">Department</label>
+                    <div className="relative group">
+                      <select 
+                        id="department"
+                        name="department"
+                        required
+                        value={formData.department}
+                        onChange={handleChange}
+                        className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all text-zinc-300 appearance-none cursor-pointer"
+                      >
+                        <option value="" disabled className="bg-zinc-900">Select Department</option>
+                        <option value="Computer Science Engineering (Data Science)" className="bg-zinc-900">Computer Science Engineering (Data Science)</option>
+                        <option value="Information Technology" className="bg-zinc-900">Information Technology</option>
+                        <option value="Electronics & Telecommunication" className="bg-zinc-900">Electronics & Telecommunication</option>
+                        <option value="Mechanical Engineering" className="bg-zinc-900">Mechanical Engineering</option>
+                        <option value="Civil Engineering" className="bg-zinc-900">Civil Engineering</option>
+                        <option value="Artificial Intelligence & Data Science" className="bg-zinc-900">Artificial Intelligence & Data Science</option>
+                        <option value="Other" className="bg-zinc-900">Other</option>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="year" className="text-xs font-semibold text-zinc-400 ml-1">Year of Study</label>
+                    <div className="relative group">
+                      <select 
+                        id="year"
+                        name="year"
+                        required
+                        value={formData.year}
+                        onChange={handleChange}
+                        className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all text-zinc-300 appearance-none cursor-pointer"
+                      >
+                        <option value="" disabled className="bg-zinc-900">Select Year</option>
+                        <option value="1st Year" className="bg-zinc-900">1st Year</option>
+                        <option value="2nd Year" className="bg-zinc-900">2nd Year</option>
+                        <option value="3rd Year" className="bg-zinc-900">3rd Year</option>
+                        <option value="4th Year" className="bg-zinc-900">4th Year</option>
+                        <option value="Post Graduate" className="bg-zinc-900">Post Graduate</option>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Conditional Other Department Field */}
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${formData.department === 'Other' ? 'max-h-32 opacity-100 mb-6' : 'max-h-0 opacity-0 mb-0'}`}>
+                  <div className="space-y-2">
+                    <label htmlFor="otherDepartment" className="text-xs font-semibold text-zinc-400 ml-1">Please specify your department</label>
+                    <input 
+                      id="otherDepartment"
+                      type="text" 
+                      name="otherDepartment"
+                      placeholder="Enter your department"
+                      required={formData.department === 'Other'}
+                      value={formData.otherDepartment}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all shadow-inner"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 ml-1">Full Name</label>
+                <label htmlFor="clg" className="text-xs font-semibold text-zinc-400 ml-1">College/University Name</label>
                 <input 
+                  id="clg"
                   type="text" 
-                  name="full_name"
-                  placeholder="John Doe"
+                  name="clg"
+                  placeholder="Your Institution"
                   required
-                  value={formData.full_name}
+                  value={formData.clg}
                   onChange={handleChange}
                   className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 ml-1">Email Id</label>
-                <input 
-                  type="email" 
-                  name="email"
-                  placeholder="john.doe@college.edu"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label htmlFor="state" className="text-xs font-semibold text-zinc-400 ml-1">State</label>
+                  <input 
+                    id="state"
+                    type="text" 
+                    name="state"
+                    placeholder="e.g., Uttarakhand"
+                    required
+                    value={formData.state}
+                    onChange={handleChange}
+                    className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="city" className="text-xs font-semibold text-zinc-400 ml-1">City</label>
+                  <input 
+                    id="city"
+                    type="text" 
+                    name="city"
+                    placeholder="e.g., Dehradun"
+                    required
+                    value={formData.city}
+                    onChange={handleChange}
+                    className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 ml-1">Department</label>
+                <label htmlFor="mobile_no" className="text-xs font-semibold text-zinc-400 ml-1">Mobile Number</label>
                 <input 
-                  type="text" 
-                  name="department"
-                  placeholder="e.g., CSE-DS"
-                  required
-                  value={formData.department}
-                  onChange={handleChange}
-                  className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 ml-1">Mobile Number</label>
-                <input 
+                  id="mobile_no"
                   type="text" 
                   name="mobile_no"
                   placeholder="+91 00000 00000"

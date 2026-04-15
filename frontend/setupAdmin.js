@@ -3,7 +3,18 @@ const bcrypt = require('bcryptjs');
 
 async function main() {
   const prisma = new PrismaClient();
-  const hashedPassword = await bcrypt.hash('harshwardhan3519', 12);
+  const password = process.env.ADMIN_INITIAL_PASSWORD;
+  
+  if (!password) {
+    if (process.env.NODE_ENV !== 'development') {
+      console.error('FATAL: ADMIN_INITIAL_PASSWORD is required in production environments.');
+      process.exit(1);
+    }
+    console.warn('Using insecure development fallback password.');
+  }
+
+  const finalPassword = password || 'change_this_immediately';
+  const hashedPassword = await bcrypt.hash(finalPassword, 12);
   
   await prisma.user.upsert({
     where: { email: 'harshwardhan474@gmail.com' },

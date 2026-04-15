@@ -24,9 +24,9 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { full_name, email, department, mobile_no } = await req.json();
+    const { full_name, email, department, year, clg, state, city, mobile_no } = await req.json();
 
-    if (!full_name || !email || !department || !mobile_no) {
+    if (!full_name || !email || !department || !year || !clg || !state || !city || !mobile_no) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -45,6 +45,10 @@ export async function POST(req: Request) {
         full_name,
         email: email.toLowerCase(),
         department,
+        year,
+        clg,
+        state,
+        city,
         mobile_no,
       }
     });
@@ -86,6 +90,10 @@ export async function POST(req: Request) {
               <tr><td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Name:</strong></td><td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(full_name)}</td></tr>
               <tr><td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Email:</strong></td><td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(email)}</td></tr>
               <tr><td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Department:</strong></td><td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(department)}</td></tr>
+              <tr><td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Year:</strong></td><td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(year)}</td></tr>
+              <tr><td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>College:</strong></td><td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(clg)}</td></tr>
+              <tr><td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>State:</strong></td><td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(state)}</td></tr>
+              <tr><td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>City:</strong></td><td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(city)}</td></tr>
               <tr><td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Mobile:</strong></td><td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(mobile_no)}</td></tr>
             </table>
             <br />

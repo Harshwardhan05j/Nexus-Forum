@@ -83,7 +83,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505] py-12">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505] py-12 mt-nav">
       {/* Background glows */}
       <div className="absolute top-[-20%] right-[10%] w-[600px] h-[600px] bg-purple-600/10 blur-[160px] rounded-full pointer-events-none" />
       <div className="absolute bottom-[-20%] left-[10%] w-[400px] h-[400px] bg-blue-600/8 blur-[140px] rounded-full pointer-events-none" />

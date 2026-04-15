@@ -26,7 +26,9 @@ app = Flask(__name__,
     template_folder='templates',
     static_folder='static',
     static_url_path='/static')
-app.secret_key = os.getenv('SECRET_KEY', 'nexus_secret_key_123')
+app.secret_key = os.getenv('SECRET_KEY')
+if not app.secret_key:
+    raise ValueError("No SECRET_KEY set for Flask application")
 
 oauth = OAuth(app)
 google = oauth.register(
@@ -334,9 +336,14 @@ def hackronyx_participation():
         email      = request.form.get('email', '').strip().lower()
         department = request.form.get('department', '').strip()
         mobile_no  = request.form.get('mobile_no', '').strip()
+        year       = request.form.get('year', '').strip()
+        clg        = request.form.get('clg', '').strip()
+        state      = request.form.get('state', '').strip()
+        city       = request.form.get('city', '').strip()
 
         err = validate_form({'full name': full_name, 'email': email,
-                             'department': department, 'mobile number': mobile_no})
+                             'department': department, 'mobile number': mobile_no,
+                             'year': year, 'college': clg, 'state': state, 'city': city})
         if err:
             flash(err)
             return redirect(url_for('hackronyx_participation'))
@@ -348,9 +355,9 @@ def hackronyx_participation():
             with get_db_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute("""
-                    INSERT INTO hackronyx_willingness (full_name, department, mobile_no, email)
-                    VALUES (%s, %s, %s, %s)
-                """, (full_name, department, mobile_no, email))
+                    INSERT INTO hackronyx_willingness (full_name, department, mobile_no, email, year, clg, state, city)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """, (full_name, department, mobile_no, email, year, clg, state, city))
                 conn.commit()
                 flash(f'Thank you, {full_name}! Your response for HackRonyX participation has been recorded.')
                 return redirect(url_for('home'))
@@ -418,7 +425,7 @@ def google_callback():
             
             if not user:
                 # Create user with correct role for admin emails
-                role = 'admin' if email in ['harshwardhanjadhav01@gmail.com', 'harshwardhan918@gmail.com'] else 'user'
+                role = 'admin' if email in ADMIN_EMAILS else 'user'
                 cursor.execute('INSERT INTO "User"(id, name, email, password, role, "updatedAt") VALUES(%s,%s,%s,%s,%s, NOW())', 
                              (str(uuid.uuid4()), name, email, 'oauth_user_no_pass', role))
                 conn.commit()

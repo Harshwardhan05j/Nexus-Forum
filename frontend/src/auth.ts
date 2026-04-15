@@ -45,8 +45,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt" },
   callbacks: {
     async signIn({ user, account }) {
-      // Upsert Google users into DB (credentials users are already stored via signup API)
       if (account?.provider === "google" && user.email) {
+        const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
+        const isAdmin = adminEmails.includes(user.email);
         try {
           await prisma.user.upsert({
             where: { email: user.email },
@@ -56,6 +57,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               name: user.name ?? "",
               image: user.image ?? "",
               emailVerified: new Date(),
+              role: isAdmin ? "admin" : "user",
             },
           });
         } catch (e) { console.error("Failed to upsert user:", e); }
@@ -63,14 +65,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token, user }) {
-      if (user) token.id = user.id;
+      if (user) {
+        token.id = user.id;
+        // Fetch role from DB if it's not on the user object (for Google users on first login)
+        if (!(user as any).role) {
+          if (!token.email) {
+            token.role = "user";
+          } else {
+            const dbUser = await prisma.user.findUnique({ where: { email: token.email } });
+            token.role = dbUser?.role || "user";
+          }
+        } else {
+          token.role = (user as any).role;
+        }
+      }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.email = token.email as string;
-        session.user.name  = token.name  as string;
-        session.user.image = token.picture as string;
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
       return session;
     },

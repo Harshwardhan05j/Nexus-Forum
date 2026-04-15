@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, Users, Plus } from "lucide-react";
+import React from "react";
+
+export const metadata: Metadata = {
+  title: "Student Tech Clubs & Societies | Nexus Forum",
+  description: "Join specialized student tech clubs like Web Nest, Data Science Innovation, and Career Catalyst to boost your skills and network.",
+};
 
 export default function ClubsPage() {
   return (
@@ -17,12 +24,33 @@ export default function ClubsPage() {
         </video>
         <div className="absolute inset-0 bg-[#050505]/40 border-none backdrop-blur-sm"></div>
       </div>
-      <main className="max-w-[1200px] mx-auto px-12 pt-[100px] min-h-[calc(100vh-184px)] relative z-10">
-        <header className="text-center py-[100px] pb-[60px]">
+      <main className="max-w-[1200px] mx-auto px-12 pt-[40px] min-h-[calc(100vh-184px)] relative z-10 mt-nav">
+        <header className="text-center pt-[60px] pb-[40px]">
           <span className="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-[#9333ea] mb-4 inline-block">Explore</span>
           <h1 className="text-[3.5rem] font-bold tracking-[-0.03em] mb-6 text-[#f2f2f2]">Nexus Clubs</h1>
           <p className="text-[1.15rem] text-[#a1a1aa] max-w-[500px] mx-auto">Discover specialized groups focused on modern tech stacks, collaboration, and industry readiness.</p>
         </header>
+
+        {/* Ambient Showcase Strip for Page Flow */}
+        <div className="relative w-full overflow-hidden mb-20 select-none mask-fade-edges">
+          <div className="flex w-max gap-4 animate-infinite-scroll py-4 hover:[animation-play-state:paused]">
+            {[...Array(2)].map((_, groupIdx) => (
+              <React.Fragment key={groupIdx}>
+                {[
+                  "/static/images/showcase/30eb48f8-d629-4490-bba0-4618a48594f5.jpg",
+                  "/static/images/showcase/5826a711-e31e-4b6c-977e-40108f4cfd63.jpg",
+                  "/static/images/showcase/a5a2cec1-4d3b-401c-a6d4-a7c6bb0635c4.jpg",
+                  "/static/images/showcase/e7274d5f-4a76-4f20-b712-8457aca31de8.jpg",
+                ].map((src, i) => (
+                  <div key={`${groupIdx}-${i}`} className="relative w-[200px] h-[120px] rounded-lg overflow-hidden border border-white/10 flex-none opacity-50 hover:opacity-100 transition-opacity">
+                    <Image src={src} alt="" aria-hidden="true" fill className="object-cover" sizes="200px" />
+                    <div className="absolute inset-0 bg-purple-500/10 mix-blend-overlay"></div>
+                  </div>
+                ))}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
 
         <section className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
           <div className="relative flex-1 max-w-full md:max-w-[320px] w-full">
@@ -45,7 +73,7 @@ export default function ClubsPage() {
           {/* Club Card 1 */}
           <div className="bg-[#0e0e0e] rounded-xl overflow-hidden border border-white/5 flex flex-col transition-all hover:-translate-y-1 hover:bg-[#141414]">
             <div className="h-[200px] w-full relative border-b border-white/5">
-              <Image src="/static/1000100511hosodud.jpg" alt="Web Nest Technology Club" fill className="object-cover" />
+              <Image src="/static/1000100511hosodud.jpg" alt="Web Nest Technology Club" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
             </div>
             <div className="p-8 flex flex-col flex-1">
               <h3 className="text-[1.5rem] font-semibold tracking-[-0.02em] mb-3 text-[#f2f2f2]">Web Nest</h3>
@@ -62,7 +90,7 @@ export default function ClubsPage() {
           {/* Club Card 2 */}
           <div className="bg-[#0e0e0e] rounded-xl overflow-hidden border border-white/5 flex flex-col transition-all hover:-translate-y-1 hover:bg-[#141414]">
             <div className="h-[200px] w-full relative border-b border-white/5">
-              <Image src="/static/4167275_18770.jpg" alt="Data Science Innovation Club" fill className="object-cover" />
+              <Image src="/static/4167275_18770.jpg" alt="Data Science Innovation Club" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
             </div>
             <div className="p-8 flex flex-col flex-1">
               <h3 className="text-[1.5rem] font-semibold tracking-[-0.02em] mb-3 text-[#f2f2f2]">Data Science Innovation</h3>
@@ -79,7 +107,7 @@ export default function ClubsPage() {
           {/* Club Card 3 */}
           <div className="bg-[#0e0e0e] rounded-xl overflow-hidden border border-white/5 flex flex-col transition-all hover:-translate-y-1 hover:bg-[#141414]">
             <div className="h-[200px] w-full relative border-b border-white/5">
-              <Image src="/static/14140043_5384286.jpg" alt="Career Catalyst Club" fill className="object-cover" />
+              <Image src="/static/14140043_5384286.jpg" alt="Career Catalyst Club" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
             </div>
             <div className="p-8 flex flex-col flex-1">
               <h3 className="text-[1.5rem] font-semibold tracking-[-0.02em] mb-3 text-[#f2f2f2]">Career Catalyst</h3>
@@ -102,38 +130,6 @@ export default function ClubsPage() {
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-white/5 pt-20 pb-12 bg-[#050505] relative z-10 w-full mt-auto">
-        <div className="max-w-[1200px] mx-auto px-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div className="md:col-span-2">
-              <h3 className="text-[0.95rem] font-bold tracking-[-0.01em] text-[#f2f2f2] mb-3">NEXUS Forum</h3>
-              <p className="text-[0.82rem] text-[#a1a1aa] leading-relaxed max-w-[240px]">
-                NEXUS is the technical forum of UPES, fostering innovation and technical excellence among students.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-[#71717a] mb-4">Navigation</h3>
-              <ul className="flex flex-col gap-2.5">
-                <li><Link href="/" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Home</Link></li>
-                <li><Link href="/clubs" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Clubs</Link></li>
-                <li><Link href="/events" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Events</Link></li>
-                <li><Link href="/committee" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Committee</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-[#71717a] mb-4">Connect</h3>
-              <ul className="flex flex-col gap-2.5">
-                <li><a href="#" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Instagram</a></li>
-                <li><a href="#" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">LinkedIn</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex justify-between items-center pt-8 border-t border-white/5 text-[0.8rem] text-[#71717a]">
-            <p>&copy; 2026 NEXUS Forum. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

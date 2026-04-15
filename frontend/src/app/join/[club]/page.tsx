@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 const CLUB_META: Record<string, { label: string; color: string; desc: string }> = {
-  'web-nest':         { label: 'Web Nest Technology Club',      color: '#3b82f6', desc: 'Full-stack development, modern web frameworks, and cloud deployment.' },
-  'data-science':     { label: 'Data Science Innovation Club',  color: '#9333ea', desc: 'Machine learning, deep learning architectures, and data engineering.' },
-  'career-catalyst':  { label: 'Career Catalyst',               color: '#10b981', desc: 'Industry readiness, DSA, competitive programming, and mock interviews.' },
+  'web-nest': { label: 'Web Nest Technology Club', color: '#3b82f6', desc: 'Full-stack development, modern web frameworks, and cloud deployment.' },
+  'data-science': { label: 'Data Science Innovation Club', color: '#9333ea', desc: 'Machine learning, deep learning architectures, and data engineering.' },
+  'career-catalyst': { label: 'Career Catalyst', color: '#10b981', desc: 'Industry readiness, DSA, competitive programming, and mock interviews.' },
 };
 
 export default function JoinClubPage() {

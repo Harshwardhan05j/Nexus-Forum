@@ -45,7 +45,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505]">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505] mt-nav">
       {/* Background glows */}
       <div className="absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-purple-600/10 blur-[160px] rounded-full pointer-events-none" />
       <div className="absolute bottom-[-20%] right-[10%] w-[400px] h-[400px] bg-blue-600/8 blur-[140px] rounded-full pointer-events-none" />
@@ -147,7 +147,7 @@ export default function LoginPage() {
 
         <p className="text-center text-zinc-600 text-xs mt-6">
           By continuing, you agree to our{" "}
-          <a href="#" className="text-zinc-500 underline underline-offset-4 hover:text-zinc-300 transition-colors">Terms of Service</a>
+          <a href="/terms" className="text-zinc-500 underline underline-offset-4 hover:text-zinc-300 transition-colors">Terms of Service</a>
         </p>
       </div>
     </div>

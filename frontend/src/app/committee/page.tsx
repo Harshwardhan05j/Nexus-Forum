@@ -4,9 +4,9 @@ import Image from "next/image";
 export default function CommitteePage() {
   return (
     <>
-      <main className="max-w-[1200px] mx-auto px-12 pt-[100px] min-h-screen relative z-10">
+      <main className="max-w-[1200px] mx-auto px-12 pt-[40px] min-h-screen relative z-10 mt-nav">
         {/* Header */}
-        <header className="text-center py-[100px] pb-[72px]">
+        <header className="text-center py-[60px] pb-[72px]">
           <span className="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-[#9333ea] mb-4 inline-block">Leadership 2025–26</span>
           <h1 className="text-[3.5rem] font-bold tracking-[-0.03em] mb-5 text-[#f2f2f2]">The Steering Committee</h1>
           <p className="text-[1.15rem] text-[#a1a1aa] max-w-[560px] mx-auto">Meet the dedicated members who drive the Nexus Forum's vision, governance, and community initiatives forward.</p>
@@ -17,7 +17,14 @@ export default function CommitteePage() {
           <p className="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-[#a1a1aa] mb-[40px] pb-4 border-b border-white/5">Faculty Coordinator</p>
           <div className="flex flex-col md:flex-row items-center gap-[40px] bg-[#0e0e0e] border border-white/5 rounded-xl p-[48px] max-w-[700px] transition-colors hover:bg-[#141414]">
             <div className="w-[96px] h-[96px] rounded-full overflow-hidden shrink-0 bg-[#1a1a1a] relative">
-              <Image src="/static/2037 - Aashish Dandekar (The Brainwaves).jpg" alt="Ashish Dandekar" fill className="object-cover" />
+              <Image 
+                src="/static/2037 - Aashish Dandekar (The Brainwaves).jpg" 
+                alt="Ashish Dandekar" 
+                fill 
+                className="object-cover" 
+                sizes="96px"
+                priority
+              />
             </div>
             <div className="text-center md:text-left">
               <h3 className="text-[1.6rem] font-semibold tracking-[-0.02em] mb-1.5 text-[#f2f2f2]">Ashish Dandekar</h3>
@@ -36,10 +43,10 @@ export default function CommitteePage() {
           <p className="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-[#a1a1aa] mb-[40px] pb-4 border-b border-white/5">Executive Committee</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             
-            {/* Member 1 */}
+            {/* Rushabh Wakekar */}
             <div className="bg-[#0e0e0e] border border-white/5 rounded-xl p-[40px] px-[32px] text-center transition-all hover:-translate-y-1 hover:bg-[#141414] flex flex-col items-center">
               <div className="w-[80px] h-[80px] rounded-full overflow-hidden bg-[#1a1a1a] mb-6 relative">
-                <Image src="/static/cc7.png" alt="Rushabh Wakekar" fill className="object-cover" />
+                <Image src="/static/cc7.png" alt="Rushabh Wakekar" fill className="object-cover" sizes="80px" />
               </div>
               <h3 className="text-[1.2rem] font-semibold tracking-[-0.01em] mb-1.5 text-[#f2f2f2]">Rushabh Wakekar</h3>
               <div className="text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-[#9333ea] mb-3">President</div>
@@ -53,7 +60,7 @@ export default function CommitteePage() {
             {/* Member 2 */}
             <div className="bg-[#0e0e0e] border border-white/5 rounded-xl p-[40px] px-[32px] text-center transition-all hover:-translate-y-1 hover:bg-[#141414] flex flex-col items-center">
               <div className="w-[80px] h-[80px] rounded-full overflow-hidden bg-[#1a1a1a] mb-6 relative">
-                <Image src="/static/cc2.png" alt="Manjosh Lilhare" fill className="object-cover" />
+                <Image src="/static/cc2.png" alt="Manjosh Lilhare" fill className="object-cover" sizes="80px" />
               </div>
               <h3 className="text-[1.2rem] font-semibold tracking-[-0.01em] mb-1.5 text-[#f2f2f2]">Manjosh Lilhare</h3>
               <div className="text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-[#9333ea] mb-3">Vice President</div>
@@ -67,7 +74,7 @@ export default function CommitteePage() {
             {/* Member 3 */}
             <div className="bg-[#0e0e0e] border border-white/5 rounded-xl p-[40px] px-[32px] text-center transition-all hover:-translate-y-1 hover:bg-[#141414] flex flex-col items-center">
               <div className="w-[80px] h-[80px] rounded-full overflow-hidden bg-[#1a1a1a] mb-6 relative">
-                <Image src="/static/cc1.png" alt="Ajinkya Mariche" fill className="object-cover" />
+                <Image src="/static/cc1.png" alt="Ajinkya Mariche" fill className="object-cover" sizes="80px" />
               </div>
               <h3 className="text-[1.2rem] font-semibold tracking-[-0.01em] mb-1.5 text-[#f2f2f2]">Ajinkya Mariche</h3>
               <div className="text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-[#9333ea] mb-3">Secretary</div>
@@ -81,7 +88,7 @@ export default function CommitteePage() {
             {/* Member 4 */}
             <div className="bg-[#0e0e0e] border border-white/5 rounded-xl p-[40px] px-[32px] text-center transition-all hover:-translate-y-1 hover:bg-[#141414] flex flex-col items-center">
               <div className="w-[80px] h-[80px] rounded-full overflow-hidden bg-[#1a1a1a] mb-6 relative">
-                <Image src="/static/cc4.png" alt="Priyanshi Khadgi" fill className="object-cover" />
+                <Image src="/static/cc4.png" alt="Priyanshi Khadgi" fill className="object-cover" sizes="80px" />
               </div>
               <h3 className="text-[1.2rem] font-semibold tracking-[-0.01em] mb-1.5 text-[#f2f2f2]">Priyanshi Khadgi</h3>
               <div className="text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-[#9333ea] mb-3">Joint Secretary</div>
@@ -95,7 +102,7 @@ export default function CommitteePage() {
             {/* Member 5 */}
             <div className="bg-[#0e0e0e] border border-white/5 rounded-xl p-[40px] px-[32px] text-center transition-all hover:-translate-y-1 hover:bg-[#141414] flex flex-col items-center">
               <div className="w-[80px] h-[80px] rounded-full overflow-hidden bg-[#1a1a1a] mb-6 relative">
-                <Image src="/static/cc6.png" alt="Shivansh Agrawal" fill className="object-cover" />
+                <Image src="/static/cc6.png" alt="Shivansh Agrawal" fill className="object-cover" sizes="80px" />
               </div>
               <h3 className="text-[1.2rem] font-semibold tracking-[-0.01em] mb-1.5 text-[#f2f2f2]">Shivansh Agrawal</h3>
               <div className="text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-[#9333ea] mb-3">Treasurer</div>
@@ -109,7 +116,7 @@ export default function CommitteePage() {
             {/* Member 6 */}
             <div className="bg-[#0e0e0e] border border-white/5 rounded-xl p-[40px] px-[32px] text-center transition-all hover:-translate-y-1 hover:bg-[#141414] flex flex-col items-center">
               <div className="w-[80px] h-[80px] rounded-full overflow-hidden bg-[#1a1a1a] mb-6 relative">
-                <Image src="/static/cc8.png" alt="Harshwardhan Jadhav" fill className="object-cover" />
+                <Image src="/static/cc8.png" alt="Harshwardhan Jadhav" fill className="object-cover" sizes="80px" />
               </div>
               <h3 className="text-[1.2rem] font-semibold tracking-[-0.01em] mb-1.5 text-[#f2f2f2]">Harshwardhan Jadhav</h3>
               <div className="text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-[#9333ea] mb-3">Joint Treasurer</div>
@@ -123,7 +130,7 @@ export default function CommitteePage() {
             {/* Member 7 */}
             <div className="bg-[#0e0e0e] border border-white/5 rounded-xl p-[40px] px-[32px] text-center transition-all hover:-translate-y-1 hover:bg-[#141414] flex flex-col items-center">
               <div className="w-[80px] h-[80px] rounded-full overflow-hidden bg-[#1a1a1a] mb-6 relative">
-                <Image src="/static/cc3.png" alt="Shrenik Nil" fill className="object-cover" />
+                <Image src="/static/cc3.png" alt="Shrenik Nil" fill className="object-cover" sizes="80px" />
               </div>
               <h3 className="text-[1.2rem] font-semibold tracking-[-0.01em] mb-1.5 text-[#f2f2f2]">Shrenik Nil</h3>
               <div className="text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-[#9333ea] mb-3">Documentation Head</div>
@@ -137,7 +144,7 @@ export default function CommitteePage() {
             {/* Member 8 */}
             <div className="bg-[#0e0e0e] border border-white/5 rounded-xl p-[40px] px-[32px] text-center transition-all hover:-translate-y-1 hover:bg-[#141414] flex flex-col items-center">
               <div className="w-[80px] h-[80px] rounded-full overflow-hidden bg-[#1a1a1a] mb-6 relative">
-                <Image src="/static/cc5.png" alt="Mohit Gupta" fill className="object-cover" />
+                <Image src="/static/cc5.png" alt="Mohit Gupta" fill className="object-cover" sizes="80px" />
               </div>
               <h3 className="text-[1.2rem] font-semibold tracking-[-0.01em] mb-1.5 text-[#f2f2f2]">Mohit Gupta</h3>
               <div className="text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-[#9333ea] mb-3">Mentor</div>
@@ -182,44 +189,12 @@ export default function CommitteePage() {
         <section className="bg-[#0e0e0e] border-y border-white/5 py-[100px] text-center mb-[120px] -mx-12 px-12">
           <h2 className="text-[2.5rem] font-semibold tracking-[-0.03em] mb-4 text-[#f2f2f2]">Interested in serving?</h2>
           <p className="text-[#a1a1aa] text-[1.1rem] max-w-[560px] mx-auto mb-8">Applications for the next committee cycle open each academic year. Learn about governance roles and expectations before applying.</p>
-          <Link href="#" className="bg-transparent border border-white/15 text-[#f2f2f2] px-8 py-3.5 rounded-md text-[1rem] font-medium hover:border-white/40 transition-colors">
-            View Governance Documentation
+          <Link href="/committee-application" className="bg-[#f2f2f2] text-[#050505] px-8 py-3.5 rounded-md text-[1rem] font-medium hover:bg-[#e5e5e5] transition-all">
+            Apply for Next Cycle
           </Link>
         </section>
 
       </main>
-
-      <footer className="border-t border-white/5 pt-20 pb-12 bg-[#050505] relative z-10 w-full mt-auto">
-        <div className="max-w-[1200px] mx-auto px-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div className="md:col-span-2">
-              <h3 className="text-[0.95rem] font-bold tracking-[-0.01em] text-[#f2f2f2] mb-3">NEXUS Forum</h3>
-              <p className="text-[0.82rem] text-[#a1a1aa] leading-relaxed max-w-[240px]">
-                NEXUS is the technical forum of UPES, fostering innovation and technical excellence among students.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-[#71717a] mb-4">Navigation</h3>
-              <ul className="flex flex-col gap-2.5">
-                <li><Link href="/" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Home</Link></li>
-                <li><Link href="/clubs" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Clubs</Link></li>
-                <li><Link href="/events" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Events</Link></li>
-                <li><Link href="/committee" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Committee</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-[#71717a] mb-4">Connect</h3>
-              <ul className="flex flex-col gap-2.5">
-                <li><a href="#" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Instagram</a></li>
-                <li><a href="#" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">LinkedIn</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex justify-between items-center pt-8 border-t border-white/5 text-[0.8rem] text-[#71717a]">
-            <p>&copy; 2026 NEXUS Forum. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

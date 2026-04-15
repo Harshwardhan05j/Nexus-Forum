@@ -77,12 +77,29 @@ export default function AdminDashboard({
       {/* Tab Content */}
       <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
         {activeTab === 'hackronyx' && (
-          <Section title="HackRonyX 2026 — Interest Registrations" count={hackronyx.length} color="#ef4444">
-            <Table headers={['#', 'Name', 'Email', 'Department', 'Mobile', 'Submitted']}>
+          <Section 
+            title="HackRonyX 2026 — Interest Registrations" 
+            count={hackronyx.length} 
+            color="#ef4444"
+            action={<DownloadButton onClick={() => downloadCSV(hackronyx, 'hackronyx_willingness.csv', [
+              { label: 'Full Name', key: 'full_name' },
+              { label: 'Email ID', key: 'email' },
+              { label: 'Department', key: 'department' },
+              { label: 'Year', key: 'year' },
+              { label: 'College', key: 'clg' },
+              { label: 'State', key: 'state' },
+              { label: 'City', key: 'city' },
+              { label: 'Mobile No', key: 'mobile_no' },
+              { label: 'Submitted At', key: 'submitted_at' },
+            ])} />}
+          >
+            <Table headers={['#', 'Name', 'Email', 'Department', 'Year', 'College', 'State', 'City', 'Mobile', 'Submitted']}>
               {hackronyx.map((r, i) => (
                 <tr key={r.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors text-white">
                   <Td>{i + 1}</Td><Td>{r.full_name}</Td><Td muted>{r.email}</Td>
-                  <Td>{r.department}</Td><Td muted>{r.mobile_no}</Td><Td muted>{fmt(r.submitted_at)}</Td>
+                  <Td>{r.department}</Td><Td muted>{r.year}</Td><Td>{r.clg}</Td>
+                  <Td muted>{r.state}</Td><Td muted>{r.city}</Td>
+                  <Td muted>{r.mobile_no}</Td><Td muted>{fmt(r.submitted_at)}</Td>
                 </tr>
               ))}
             </Table>
@@ -90,7 +107,19 @@ export default function AdminDashboard({
         )}
 
         {activeTab === 'clubs' && (
-          <Section title="Club Applications" count={allClubMembers.length} color="#3b82f6">
+          <Section 
+            title="Club Applications" 
+            count={allClubMembers.length} 
+            color="#3b82f6"
+            action={<DownloadButton onClick={() => downloadCSV(allClubMembers, 'club_applications.csv', [
+              { label: 'Full Name', key: 'full_name' },
+              { label: 'Email ID', key: 'email' },
+              { label: 'Club', key: 'club' },
+              { label: 'Department', key: 'department' },
+              { label: 'Year', key: 'year' },
+              { label: 'Applied On', key: 'applied_on' },
+            ])} />}
+          >
             <Table headers={['#', 'Name', 'Email', 'Club', 'Department', 'Year', 'Applied']}>
               {allClubMembers.map((r, i) => (
                 <tr key={`${r.club}-${r.id}`} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors text-white">
@@ -104,7 +133,20 @@ export default function AdminDashboard({
         )}
 
         {activeTab === 'events' && (
-          <Section title="Event Registrations" count={eventRegs.length} color="#10b981">
+          <Section 
+            title="Event Registrations" 
+            count={eventRegs.length} 
+            color="#10b981"
+            action={<DownloadButton onClick={() => downloadCSV(eventRegs, 'event_registrations.csv', [
+              { label: 'Full Name', key: 'full_name' },
+              { label: 'Email ID', key: 'email' },
+              { label: 'Event Name', key: 'event_name' },
+              { label: 'Phone', key: 'phone' },
+              { label: 'Year', key: 'year' },
+              { label: 'Registered On', key: 'registered_on' },
+              { label: 'Expectations', key: 'expectations' },
+            ])} />}
+          >
             <Table headers={['#', 'Name', 'Email', 'Event', 'Phone', 'Year', 'Registered']}>
               {eventRegs.map((r, i) => (
                 <tr key={r.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors text-white">
@@ -118,7 +160,23 @@ export default function AdminDashboard({
         )}
 
         {activeTab === 'proposals' && (
-          <Section title="Event Proposals" count={proposals.length} color="#f59e0b">
+          <Section 
+            title="Event Proposals" 
+            count={proposals.length} 
+            color="#f59e0b"
+            action={<DownloadButton onClick={() => downloadCSV(proposals, 'event_proposals.csv', [
+              { label: 'Organizer Name', key: 'organizer_name' },
+              { label: 'Email ID', key: 'organizer_email' },
+              { label: 'Event Title', key: 'event_title' },
+              { label: 'Type', key: 'event_type' },
+              { label: 'Proposed Date', key: 'proposed_date' },
+              { label: 'Expected Attendees', key: 'expected_attendees' },
+              { label: 'Venue Needed', key: 'venue_needed' },
+              { label: 'Description', key: 'description' },
+              { label: 'Status', key: 'status' },
+              { label: 'Submitted On', key: 'submitted_on' },
+            ])} />}
+          >
             <Table headers={['#', 'Organizer', 'Email', 'Event Title', 'Type', 'Date', 'Status', 'Submitted', 'Actions']}>
               {proposals.map((r, i) => (
                 <tr key={r.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors text-white">
@@ -149,7 +207,18 @@ export default function AdminDashboard({
         )}
 
         {activeTab === 'users' && (
-          <Section title="Registered Users (Google OAuth)" count={users.length} color="#9333ea">
+          <Section 
+            title="Registered Users (Google OAuth)" 
+            count={users.length} 
+            color="#9333ea"
+            action={<DownloadButton onClick={() => downloadCSV(users, 'registered_users.csv', [
+              { label: 'Name', key: 'name' },
+              { label: 'Email ID', key: 'email' },
+              { label: 'Role', key: 'role' },
+              { label: 'Created At', key: 'createdAt' },
+              { label: 'Updated At', key: 'updatedAt' },
+            ])} />}
+          >
             <Table headers={['#', 'Name', 'Email', 'Joined']}>
               {users.map((r, i) => (
                 <tr key={r.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors text-white">
@@ -167,15 +236,72 @@ export default function AdminDashboard({
 
 // ── Small UI helpers ─────────────────────────────────────────────────────────
 
-function Section({ title, count, color, children }: { title: string; count: number; color: string; children: React.ReactNode }) {
+function downloadCSV(data: any[], filename: string, mapping?: { label: string; key: string }[]) {
+  if (!data || data.length === 0) return;
+  
+  const baseMapping = mapping || Object.keys(data[0]).map(k => ({ label: k, key: k }));
+  const actualMapping = [{ label: 'S.No', key: 'sno' }, ...baseMapping];
+
+  const headers = actualMapping.map(m => `"${m.label.replace(/"/g, '""')}"`).join(',');
+  const rows = data.map((row, i) => 
+    actualMapping.map(m => {
+      let val: any;
+      if (m.key === 'sno') {
+        val = i + 1;
+      } else {
+        val = row[m.key] === null || row[m.key] === undefined ? '' : row[m.key];
+      }
+      
+      // Format dates if they look like dates
+      const finalVal = (typeof val === 'string' && val.includes('T') && !isNaN(Date.parse(val))) 
+        ? new Date(val).toLocaleString('en-IN') 
+        : val;
+      
+      return `"${String(finalVal).replace(/"/g, '""')}"`;
+    }).join(',')
+  );
+
+  const csvContent = [headers, ...rows].join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  
+  try {
+    link.click();
+  } finally {
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 100);
+  }
+}
+
+function Section({ title, count, color, children, action }: { title: string; count: number; color: string; children: React.ReactNode; action?: React.ReactNode }) {
   return (
     <section className="mb-12">
-      <div className="flex items-center gap-3 mb-4">
-        <h2 className="text-lg font-bold text-white uppercase tracking-tight">{title}</h2>
-        <span className="text-xs font-bold px-2.5 py-0.5 rounded-full" style={{ background: `${color}22`, color }}>{count}</span>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <h2 className="text-lg font-bold text-white uppercase tracking-tight">{title}</h2>
+          <span className="text-xs font-bold px-2.5 py-0.5 rounded-full" style={{ background: `${color}22`, color }}>{count}</span>
+        </div>
+        {action}
       </div>
       <div className="bg-[#0e0e0e] border border-white/5 rounded-xl overflow-hidden">{children}</div>
     </section>
+  );
+}
+
+function DownloadButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button 
+      onClick={onClick}
+      className="px-4 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-bold text-zinc-300 transition-all flex items-center gap-2"
+    >
+      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      Download CSV
+    </button>
   );
 }
 

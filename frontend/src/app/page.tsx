@@ -1,19 +1,36 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Code, Network, Rocket } from "lucide-react";
 import prisma from "@/lib/prisma";
 
+export const metadata: Metadata = {
+  title: "Nexus Forum | CSE & Data Science Tech Community",
+  description: "Join The Nexus Forum, the official tech hub for CSE and Data Science students to collaborate, build projects, and innovate. Discover events and clubs today.",
+};
+
 export const dynamic = "force-dynamic";
 
 const ARCHIVE_IMAGES = [
-  { src: "/static/DSC_0048 - NISCHAL PURI.JPG", title: "Keynote Address", desc: "Annual technical summit 2024" },
-  { src: "/static/DSC_1584-2 - Abhinav Muley.JPG", title: "HackRonyX Winner", desc: "First prize distribution" },
-  { src: "/static/DSC_1602 (2) - Jayshri Harde.JPG", title: "Committee Meeting", desc: "Planning session for upcoming events" },
-  { src: "/static/1000100511hosodud.jpg", title: "Web Nest Inauguration", desc: "Ribbon cutting ceremony" },
-  { src: "/static/1000100512hkoyxx.jpg", title: "Coding Bootcamp", desc: "Hands-on web development workshop" },
-  { src: "/static/25001216_7040859.jpg", title: "Data Science Seminar", desc: "Introduction to Neural Networks" },
-  { src: "/static/25860667_7088807.jpg", title: "Career Catalyst", desc: "Resume building & interview prep" },
-  { src: "/static/4167275_18770.jpg", title: "Open Source Contribution", desc: "GitHub Hacktoberfest participation" }
+  { src: "/static/images/showcase/38e33fcd-af96-4ba9-a77c-9071ead7304f.jpg", title: "HackRonyX 2025", desc: "Our flagship event" },
+  { src: "/static/images/showcase/790beb96-253a-45ba-bd21-03ccfc4c6a26.jpg", title: "Winner's Podium", desc: "Recognizing excellence" },
+  { src: "/static/images/showcase/5efcc58e-5e49-4253-9188-0e1c8a72eab0.jpg", title: "Technical Bootcamp", desc: "Continuous learning" },
+  { src: "/static/images/showcase/1a3dc921-82ac-4e10-b5ed-592d387ff3e6.jpg", title: "Grand Opening", desc: "Inaugurating the tech fest" },
+  { src: "/static/images/showcase/30eb48f8-d629-4490-bba0-4618a48594f5.jpg", title: "The Nexus Family", desc: "Community of builders" },
+  { src: "/static/images/showcase/a5a2cec1-4d3b-401c-a6d4-a7c6bb0635c4.jpg", title: "Technical Summit", desc: "Collaboration and insight" },
+  { src: "/static/images/showcase/e7274d5f-4a76-4f20-b712-8457aca31de8.jpg", title: "Planning Phase", desc: "Coordinating excellence" },
+  { src: "/static/images/showcase/5826a711-e31e-4b6c-977e-40108f4cfd63.jpg", title: "Main Hall Ceremony", desc: "Historical technical milestones" },
+];
+
+const SHOWCASE_STRIP = [
+  { src: "/static/images/showcase/38e33fcd-af96-4ba9-a77c-9071ead7304f.jpg", title: "HackRonyX 2025" },
+  { src: "/static/images/showcase/790beb96-253a-45ba-bd21-03ccfc4c6a26.jpg", title: "Grand Awards" },
+  { src: "/static/images/showcase/1a3dc921-82ac-4e10-b5ed-592d387ff3e6.jpg", title: "Technical Keynote" },
+  { src: "/static/images/showcase/5efcc58e-5e49-4253-9188-0e1c8a72eab0.jpg", title: "Build-a-thon Night" },
+  { src: "/static/images/showcase/30eb48f8-d629-4490-bba0-4618a48594f5.jpg", title: "Nexus Core Team" },
+  { src: "/static/images/showcase/5826a711-e31e-4b6c-977e-40108f4cfd63.jpg", title: "Seminar Hall Main" },
+  { src: "/static/images/showcase/a5a2cec1-4d3b-401c-a6d4-a7c6bb0635c4.jpg", title: "Inaugural Speech" },
+  { src: "/static/images/showcase/e7274d5f-4a76-4f20-b712-8457aca31de8.jpg", title: "Event Strategy" },
 ];
 
 export default async function Home() {
@@ -61,21 +78,63 @@ export default async function Home() {
         <div className="blob purple-blob"></div>
       </div>
 
-      <main className="relative z-10 pt-[100px]">
+      {/* Ambient Image Strip Bridge */}
+      <div className="relative w-full overflow-hidden mt-4 mb-4 select-none">
+        {/* Subtle top/bottom gradients for section blending */}
+        <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-[#050505] to-transparent z-20 pointer-events-none"></div>
+        <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#050505] to-transparent z-20 pointer-events-none"></div>
+
+        <div className="mask-fade-edges relative z-10 py-6 bg-purple-900/5 group">
+          <div className="flex w-max gap-4 animate-infinite-scroll">
+            {/* First set of images */}
+            {SHOWCASE_STRIP.map((img, i) => (
+              <div key={`strip-1-${i}`} className="flex-none relative w-[240px] md:w-[280px] h-[140px] md:h-[160px] rounded-xl overflow-hidden border border-white/5 bg-[#0a0a0a] transition-all hover:border-purple-500/30">
+                <div className="absolute inset-0 bg-purple-900/10 mix-blend-color z-10"></div>
+                <Image 
+                  src={img.src} 
+                  alt={img.title}
+                  fill
+                  className="object-cover opacity-40 group-hover:opacity-100 transition-all duration-1000 grayscale group-hover:grayscale-0"
+                  sizes="280px"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+            ))}
+            {/* Duplicate set for seamless looping */}
+            {SHOWCASE_STRIP.map((img, i) => (
+              <div key={`strip-2-${i}`} className="flex-none relative w-[240px] md:w-[280px] h-[140px] md:h-[160px] rounded-xl overflow-hidden border border-white/5 bg-[#0a0a0a] transition-all hover:border-purple-500/30">
+                <div className="absolute inset-0 bg-purple-900/10 mix-blend-color z-10"></div>
+                <Image 
+                  src={img.src} 
+                  alt={img.title}
+                  fill
+                  className="object-cover opacity-40 group-hover:opacity-100 transition-all duration-1000 grayscale group-hover:grayscale-0"
+                  sizes="280px"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <main className="relative z-10 pt-0 mt-nav">
         <div className="max-w-[1200px] mx-auto px-12">
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center min-h-[calc(100vh-184px)] py-[120px]">
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center min-h-[calc(100vh-480px)] pt-[40px] pb-[80px] md:pt-[50px] md:pb-[100px]">
             <div className="max-w-[600px]">
               <h1 className="text-[3rem] md:text-[4.5rem] font-bold leading-[1.05] tracking-[-0.04em] mb-6">
-                The <span className="text-[#9333ea]">Nexus</span> Forum
+                The <span className="text-[#9333ea]">Nexus DS</span> Forum
               </h1>
-              <p className="text-[1.25rem] text-[#a1a1aa] mb-10 max-w-[480px]">
+              <p className="text-[1.25rem] text-[#a1a1aa] mb-7 max-w-[480px]">
                 Official Computer Science Engineering and <strong className="text-[#f2f2f2] font-semibold">Data Science</strong> Department Platform. A high-performance hub for technical collaboration, insights, and innovation.
               </p>
               <div className="flex gap-4">
                 <Link href="/clubs" className="inline-flex items-center justify-center px-5 py-2.5 rounded-md text-[0.9rem] font-medium bg-[#f2f2f2] text-[#050505] border border-transparent hover:bg-[#e5e5e5] transition-all">
                   Explore Clubs
                 </Link>
-                <Link href="/events" className="inline-flex items-center justify-center px-5 py-2.5 rounded-md text-[0.9rem] font-medium bg-transparent text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">
+                <Link href="/events" className="inline-flex items-center justify-center px-5 py-2.5 rounded-md text-[1rem] font-medium bg-transparent text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">
                   View Events &rarr;
                 </Link>
               </div>
@@ -105,7 +164,7 @@ export default async function Home() {
               letterSpacing: '-0.04em',
             }}
           >
-            NEXUS
+            NEXUS DS
           </span>
 
           {/* Solid gradient text — sits on top */}
@@ -120,7 +179,7 @@ export default async function Home() {
               filter: 'drop-shadow(0 0 60px rgba(147,51,234,0.25))',
             }}
           >
-            NEXUS
+            NEXUS <span className="text-purple-500 opacity-80 mx-2">DS</span>
           </span>
 
           {/* Tagline below */}
@@ -287,7 +346,7 @@ export default async function Home() {
               <p className="text-[#a1a1aa] text-[1.1rem]">A visual journey through our past events, hackathons, and the incredible community.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16 no-underline">
               {ARCHIVE_IMAGES.map((img, i) => (
                 <div
                   key={i}
@@ -295,17 +354,22 @@ export default async function Home() {
                     }`}
                   style={{ minHeight: i % 5 === 0 ? '400px' : '260px' }}
                 >
-                  <div className="absolute inset-0 bg-[#0a0a0a] transition-transform duration-700 ease-in-out group-hover:scale-105"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent"></div>
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 text-[#f2f2f2] group-hover:opacity-40 transition-opacity">
-                    <Code size={40} />
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-[#f2f2f2] font-semibold text-lg tracking-tight mb-1">{img.title}</h3>
-                    <p className="text-[#a1a1aa] text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">{img.desc}</p>
-                  </div>
+                  <Image
+                    src={img.src}
+                    alt={img.title}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 opacity-60 group-hover:opacity-100"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
                 </div>
               ))}
+            </div>
+
+            <div className="flex justify-center">
+              <Link href="/archive" className="px-8 py-3 bg-[#111111] hover:bg-[#1a1a1a] text-white border border-white/10 rounded-full font-medium transition-all group scale-95 hover:scale-100">
+                View All Archive Photos <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </Link>
             </div>
           </section>
 
@@ -365,38 +429,6 @@ export default async function Home() {
           </section>
         </div>
       </main>
-
-      <footer className="border-t border-white/5 pt-20 pb-12 bg-[#050505] relative z-10">
-        <div className="max-w-[1200px] mx-auto px-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div className="md:col-span-2">
-              <h3 className="text-[0.95rem] font-bold tracking-[-0.01em] text-[#f2f2f2] mb-3">NEXUS Forum</h3>
-              <p className="text-[0.82rem] text-[#a1a1aa] leading-relaxed max-w-[240px]">
-                NEXUS is the technical forum of UPES, fostering innovation and technical excellence among students.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-[#71717a] mb-4">Navigation</h3>
-              <ul className="flex flex-col gap-2.5">
-                <li><Link href="/" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Home</Link></li>
-                <li><Link href="/clubs" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Clubs</Link></li>
-                <li><Link href="/events" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Events</Link></li>
-                <li><Link href="/committee" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Committee</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-[#71717a] mb-4">Connect</h3>
-              <ul className="flex flex-col gap-2.5">
-                <li><a href="#" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">Instagram</a></li>
-                <li><a href="#" className="text-[0.875rem] text-[#a1a1aa] hover:text-[#f2f2f2] transition-colors">LinkedIn</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex justify-between items-center pt-8 border-t border-white/5 text-[0.8rem] text-[#71717a]">
-            <p>&copy; 2026 NEXUS Forum. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
