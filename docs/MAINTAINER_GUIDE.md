@@ -6,13 +6,16 @@ This guide is for the official college department staff who will manage the Nexu
 
 ## 🚀 Deployment Overview
 
-The website consists of two main parts:
-1.  **Modern Frontend (Recommended):** Located in the `frontend/` directory. Built with Next.js 16. This handles most modern features like Google Login, Event Proposals, and the Admin Dashboard.
-2.  **Legacy Backend:** The `app.py` file in the root. Built with Flask. It currently handles some join forms and club registrations.
+The website is a **Next.js full-stack application** located in the `frontend/` directory. It handles all user-facing pages, authentication, database operations, and the Admin Dashboard natively.
 
 ### To start the application locally:
-1.  **Frontend:** `cd frontend && npm run dev` (Runs on port 3000)
-2.  **Backend:** `python app.py` (Runs on port 5000)
+1. **Frontend:** `cd frontend && npm run dev` (Runs on port 3000)
+
+### To deploy to Production (Windows Server / IIS):
+1. Navigate to the project root: `cd C:\nexus-forum-main`
+2. Build the app: `cd frontend && npm run build`
+3. Generate the deploy folder: `cd .. && .\prepare-deploy.ps1`
+4. Upload the contents of the `DEPLOY` folder to the server root via FTP.
 
 ---
 
@@ -64,8 +67,8 @@ The project uses **MySQL** (via Prisma ORM).
 
 ## ⚠️ Reliability Checklist
 
-- [ ] **Secrets:** Never share the `.env` or `.env.local` files.
-- [ ] **Updates:** Keep Node.js and Python dependencies updated.
+- [ ] **Secrets:** Never share the `.env.local` file. Rotate credentials regularly.
+- [ ] **Updates:** Keep Node.js and npm dependencies updated (`npm audit` monthly).
 - [ ] **Backups:** Ensure the MySQL database is backed up regularly by the college technical team.
 
 ---

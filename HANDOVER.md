@@ -17,9 +17,8 @@ Nexus Forum is a **Hybrid Stack** application:
 | **Auth** | Auth.js v5 | Google OAuth + Email/Password login |
 | **Database** | MySQL 8 via Prisma ORM | All registrations, users, proposals, analytics |
 | **Email** | Nodemailer (Gmail SMTP) | Confirmation & admin notification emails |
-| **Legacy Backend** | Python 3 + Flask | Older club join forms (being phased out) |
 
-> **The Next.js frontend is the primary application.** The Flask backend is legacy and handles a small subset of forms. Future maintainers should continue migrating Flask routes into Next.js API routes.
+> **The Next.js frontend handles the entire full-stack application.** All forms, database commands, and rendering are native.
 
 ---
 
@@ -53,11 +52,6 @@ ADMIN_EMAIL=your@gmail.com
 ADMIN_EMAILS=your@gmail.com
 ```
 
-**Create root `.env`:**
-```env
-SECRET_KEY=any-random-secret-string
-DATABASE_URL=mysql+pymysql://root:yourpassword@127.0.0.1:3306/nexus_forum
-```
 
 ### Step 3 — Set up the database
 ```bash
@@ -72,13 +66,30 @@ npx prisma db push    # Creates all tables in MySQL
 cd frontend
 npm install
 npm run dev           # Runs at http://localhost:3000
-
-# Terminal 2: Flask backend (legacy)
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-python app.py         # Runs at http://localhost:5000
 ```
+
+---
+
+## 🚢 Production Deployment (IIS / Windows Server)
+
+The application is configured to run as a **Next.js Standalone** build via **iisnode** on Windows shared hosting (e.g., site4now.net).
+
+### Deployment Steps:
+1. **Build the application**:
+   ```bash
+   cd frontend
+   npm run build
+   ```
+2. **Generate the Deployment Package**:
+   ```powershell
+   cd ..
+   .\prepare-deploy.ps1
+   ```
+   *This script gathers `.next/standalone`, `public/`, `node_modules/`, `server.js` (customized for iisnode), and `web.config` into a clean `DEPLOY/` folder.*
+3. **Upload over FTP** (e.g., using FileZilla):
+   - **Delete everything** currently on the remote server root.
+   - Upload the **entire contents** of the local `DEPLOY/` folder to the server root.
+   - Site automatically restarts when `server.js` is updated.
 
 ---
 
@@ -139,13 +150,7 @@ nexus-forum/
 │   ├── prisma/
 │   │   └── schema.prisma           MySQL database schema
 │   └── .env.local                  🔒 Secret keys — NEVER commit to Git
-│
-├── app.py                          Flask legacy backend
-├── templates/                      Flask HTML templates
-├── static/                         Flask assets (CSS/JS)
-├── requirements.txt                Python dependencies
-├── .env                            🔒 Flask secrets — NEVER commit to Git
-│
+
 └── docs/
     └── MAINTAINER_GUIDE.md         Day-to-day guide for department staff
 ```
@@ -203,7 +208,6 @@ Triggered automatically on:
 
 ## 🔮 Future Roadmap
 
-- [ ] **Migrate Flask routes** into Next.js API endpoints
 - [ ] **Dynamic events system** — CMS-driven instead of hardcoded in `page.tsx`
 - [ ] **Real-time notifications** for club announcements
 - [ ] **Set production domain** in `NEXT_PUBLIC_BASE_URL` and update Google OAuth authorized origins

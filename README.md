@@ -7,13 +7,12 @@ A hub for technical collaboration, events, clubs, and innovation — built by Te
 
 ## 🏗️ Architecture Overview
 
-This project uses a **Hybrid Stack** — a modern Next.js frontend paired with a lightweight Flask backend for legacy functionality.
+This project is built on a modern **Next.js** full-stack architecture.
 
 | Layer | Technology | Port | Purpose |
 |-------|-----------|------|---------|
-| **Frontend** | Next.js 15 + Auth.js | `3000` | Main website, auth, admin dashboard, all forms |
+| **Frontend/Backend** | Next.js 15 + Auth.js | `3000` | Main website, auth, admin dashboard, all api routes and forms |
 | **Database** | MySQL 8 (via Prisma ORM) | `3306` | Single source of truth for all data |
-| **Legacy Backend** | Python 3 + Flask | `5000` | Legacy club join forms (gradual migration ongoing) |
 
 ---
 
@@ -30,19 +29,9 @@ This project uses a **Hybrid Stack** — a modern Next.js frontend paired with a
 cd frontend
 npm install
 
-# Backend
-python -m venv venv
-venv\Scripts\activate      # Windows
-pip install -r requirements.txt
-```
+
 
 ### 2. Configure Environment Variables
-
-**Root `.env`** (Flask backend):
-```env
-SECRET_KEY=your-flask-secret-key
-DATABASE_URL=mysql+pymysql://root:yourpassword@127.0.0.1:3306/nexus_forum
-```
 
 **`frontend/.env.local`** (Next.js — the main app):
 ```env
@@ -70,13 +59,23 @@ npx prisma db push   # Creates all tables in MySQL
 ### 4. Run the Application
 
 ```bash
-# Terminal 1 — Next.js Frontend (main app)
 cd frontend
 npm run dev          # http://localhost:3000
-
-# Terminal 2 — Flask Backend (legacy)
-python app.py        # http://localhost:5000
 ```
+
+### 5. Production Deployment (Windows/IIS)
+
+To deploy to Windows Server (IIS / iisnode), use the deployment package builder:
+```powershell
+# 1. Build the standalone Next.js app
+cd frontend
+npm run build
+
+# 2. Generate the DEPLOY package
+cd ..
+.\prepare-deploy.ps1
+```
+Upload the contents of the `DEPLOY` folder to your server's root directory using an FTP client like FileZilla.
 
 ---
 
@@ -91,12 +90,7 @@ nexus-forum/
 │   ├── prisma/schema.prisma ← Database schema (MySQL)
 │   ├── .env.local         ← 🔒 Secret keys (NOT in Git)
 │   └── README.md          ← Detailed frontend documentation
-│
-├── app.py                 ← Flask legacy backend
-├── templates/             ← Flask HTML templates
-├── static/                ← Flask CSS/JS assets
-├── requirements.txt       ← Python dependencies
-├── .env                   ← 🔒 Flask secrets (NOT in Git)
+
 │
 ├── docs/
 │   └── MAINTAINER_GUIDE.md ← Guide for department staff

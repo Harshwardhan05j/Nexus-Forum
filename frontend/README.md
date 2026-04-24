@@ -136,11 +136,19 @@ Edit `frontend/src/app/events/page.tsx` and add a new event card. Registration f
 
 ---
 
-## 📦 Build for Production
+## 📦 Build for Production (IIS / Windows Server)
+
+To deploy to production, use the automated PowerShell script from the project root:
 
 ```bash
+# 1. Build the frontend
 npm run build
-npm start
+
+# 2. Go to the project root and run the packager
+cd ..
+.\prepare-deploy.ps1
 ```
 
 > ⚠️ Set `NEXT_PUBLIC_BASE_URL` in your environment before building for production so `sitemap.xml` and `robots.txt` use the correct domain.
+
+Upload the contents of the `DEPLOY/` folder generated in the root directory to your web server using FileZilla.
