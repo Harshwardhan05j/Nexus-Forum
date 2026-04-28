@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 pt-20 pb-12 bg-[#050505] relative z-10 w-full mt-auto">
-      <div className="max-w-[1200px] mx-auto px-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+    <footer className="border-t border-white/5 pt-16 md:pt-20 pb-10 md:pb-12 bg-[#050505] relative z-10 w-full mt-auto">
+      <div className="max-w-[1200px] mx-auto px-5 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
           <div className="md:col-span-2">
             <h3 className="text-[1.1rem] font-bold tracking-[-0.01em] text-[#f2f2f2] mb-4">The NEXUS Forum</h3>
             <p className="text-[0.85rem] text-[#a1a1aa] leading-relaxed max-w-[280px]">

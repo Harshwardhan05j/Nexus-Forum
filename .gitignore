@@ -1,3 +1,6 @@
+# ================================
+# Python / Flask (legacy)
+# ================================
 __pycache__/
 *.pyc
 *.pyo
@@ -18,38 +21,59 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+instance/
+.webassets-cache
+.pytest_cache/
+.coverage
+htmlcov/
 
-# Database files
-*.db
-database.db
+# ================================
+# Node.js / Next.js
+# ================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Environment variables
+# Next.js build output (generated — do not commit)
+frontend/.next/
+frontend/out/
+
+# DEPLOY build artifacts (generated — do not commit)
+DEPLOY/.next/
+DEPLOY/_next/
+DEPLOY/node_modules/
+DEPLOY/public/
+
+# ================================
+# Environment & Secrets
+# ================================
 .env
+.env.local
+.env.production
+.env.*.local
 .venv
 env/
 venv/
 ENV/
 
-# IDE
+# ================================
+# Database
+# ================================
+*.db
+database.db
+
+# ================================
+# IDE / Editor
+# ================================
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
+# ================================
 # OS
+# ================================
 .DS_Store
 Thumbs.db
-
-# Flask
-instance/
-.webassets-cache
-
-# Node modules (if any)
-node_modules/
-npm-debug.log
-
-# Misc
-.pytest_cache/
-.coverage
-htmlcov/

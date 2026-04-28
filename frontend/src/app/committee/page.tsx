@@ -4,18 +4,18 @@ import Image from "next/image";
 export default function CommitteePage() {
   return (
     <>
-      <main className="max-w-[1200px] mx-auto px-12 pt-[40px] min-h-screen relative z-10 mt-nav">
+      <main className="max-w-[1200px] mx-auto px-5 md:px-12 pt-[40px] min-h-screen relative z-10 mt-nav">
         {/* Header */}
-        <header className="text-center py-[60px] pb-[72px]">
+        <header className="text-center py-[40px] md:py-[60px] pb-[48px] md:pb-[72px]">
           <span className="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-[#9333ea] mb-4 inline-block">Leadership 2025–26</span>
-          <h1 className="text-[3.5rem] font-bold tracking-[-0.03em] mb-5 text-[#f2f2f2]">The Steering Committee</h1>
-          <p className="text-[1.15rem] text-[#a1a1aa] max-w-[560px] mx-auto">Meet the dedicated members who drive the Nexus Forum's vision, governance, and community initiatives forward.</p>
+          <h1 className="text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-bold tracking-[-0.03em] mb-4 md:mb-5 text-[#f2f2f2]">The Steering Committee</h1>
+          <p className="text-[1rem] md:text-[1.15rem] text-[#a1a1aa] max-w-[560px] mx-auto">Meet the dedicated members who drive the Nexus Forum's vision, governance, and community initiatives forward.</p>
         </header>
 
         {/* Faculty Coordinator */}
         <section className="mb-[96px]">
           <p className="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-[#a1a1aa] mb-[40px] pb-4 border-b border-white/5">Faculty Coordinator</p>
-          <div className="flex flex-col md:flex-row items-center gap-[40px] bg-[#0e0e0e] border border-white/5 rounded-xl p-[48px] max-w-[700px] transition-colors hover:bg-[#141414]">
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-[40px] bg-[#0e0e0e] border border-white/5 rounded-xl p-6 md:p-[48px] max-w-[700px] transition-colors hover:bg-[#141414]">
             <div className="w-[96px] h-[96px] rounded-full overflow-hidden shrink-0 bg-[#1a1a1a] relative">
               <Image 
                 src="/static/2037 - Aashish Dandekar (The Brainwaves).jpg" 
@@ -186,9 +186,9 @@ export default function CommitteePage() {
         </section>
 
         {/* Governance CTA */}
-        <section className="bg-[#0e0e0e] border-y border-white/5 py-[100px] text-center mb-[120px] -mx-12 px-12">
-          <h2 className="text-[2.5rem] font-semibold tracking-[-0.03em] mb-4 text-[#f2f2f2]">Interested in serving?</h2>
-          <p className="text-[#a1a1aa] text-[1.1rem] max-w-[560px] mx-auto mb-8">Applications for the next committee cycle open each academic year. Learn about governance roles and expectations before applying.</p>
+        <section className="bg-[#0e0e0e] border-y border-white/5 py-16 md:py-[100px] text-center mb-16 md:mb-[120px] -mx-5 md:-mx-12 px-5 md:px-12">
+          <h2 className="text-[1.8rem] md:text-[2.5rem] font-semibold tracking-[-0.03em] mb-3 md:mb-4 text-[#f2f2f2]">Interested in serving?</h2>
+          <p className="text-[#a1a1aa] text-[1rem] md:text-[1.1rem] max-w-[560px] mx-auto mb-6 md:mb-8">Applications for the next committee cycle open each academic year. Learn about governance roles and expectations before applying.</p>
           <Link href="/committee-application" className="bg-[#f2f2f2] text-[#050505] px-8 py-3.5 rounded-md text-[1rem] font-medium hover:bg-[#e5e5e5] transition-all">
             Apply for Next Cycle
           </Link>

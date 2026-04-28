@@ -24,11 +24,11 @@ export default function ClubsPage() {
         </video>
         <div className="absolute inset-0 bg-[#050505]/40 border-none backdrop-blur-sm"></div>
       </div>
-      <main className="max-w-[1200px] mx-auto px-12 pt-[40px] min-h-[calc(100vh-184px)] relative z-10 mt-nav">
-        <header className="text-center pt-[60px] pb-[40px]">
+      <main className="max-w-[1200px] mx-auto px-5 md:px-12 pt-[40px] min-h-[calc(100vh-184px)] relative z-10 mt-nav">
+        <header className="text-center pt-[40px] md:pt-[60px] pb-[30px] md:pb-[40px]">
           <span className="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-[#9333ea] mb-4 inline-block">Explore</span>
-          <h1 className="text-[3.5rem] font-bold tracking-[-0.03em] mb-6 text-[#f2f2f2]">Nexus Clubs</h1>
-          <p className="text-[1.15rem] text-[#a1a1aa] max-w-[500px] mx-auto">Discover specialized groups focused on modern tech stacks, collaboration, and industry readiness.</p>
+          <h1 className="text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-bold tracking-[-0.03em] mb-4 md:mb-6 text-[#f2f2f2]">Nexus Clubs</h1>
+          <p className="text-[1rem] md:text-[1.15rem] text-[#a1a1aa] max-w-[500px] mx-auto">Discover specialized groups focused on modern tech stacks, collaboration, and industry readiness.</p>
         </header>
 
         {/* Ambient Showcase Strip for Page Flow */}
@@ -122,7 +122,7 @@ export default function ClubsPage() {
           </div>
 
           {/* Add Club Placeholder */}
-          <div className="bg-transparent border border-dashed border-[#a1a1aa] hover:border-[#f2f2f2] rounded-xl flex items-center justify-center min-h-[480px] cursor-pointer group transition-all">
+          <div className="bg-transparent border border-dashed border-[#a1a1aa] hover:border-[#f2f2f2] rounded-xl flex items-center justify-center min-h-[200px] md:min-h-[480px] cursor-pointer group transition-all">
             <div className="text-center text-[#a1a1aa] group-hover:text-[#f2f2f2] transition-colors">
               <Plus className="w-8 h-8 mx-auto mb-4" />
               <h4 className="text-[1.1rem] font-medium text-[#f2f2f2]">Propose a New Club</h4>

@@ -121,13 +121,13 @@ export default async function Home() {
       </div>
 
       <main className="relative z-10 pt-0 mt-nav">
-        <div className="max-w-[1200px] mx-auto px-12">
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center min-h-[calc(100vh-480px)] pt-[40px] pb-[80px] md:pt-[50px] md:pb-[100px]">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-12">
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center min-h-[calc(100vh-480px)] pt-[32px] pb-[60px] md:pt-[50px] md:pb-[100px]">
             <div className="max-w-[600px]">
-              <h1 className="text-[3rem] md:text-[4.5rem] font-bold leading-[1.05] tracking-[-0.04em] mb-6">
+              <h1 className="text-[2.2rem] sm:text-[3rem] md:text-[4.5rem] font-bold leading-[1.05] tracking-[-0.04em] mb-4 md:mb-6">
                 The <span className="text-[#9333ea]">Nexus DS</span> Forum
               </h1>
-              <p className="text-[1.25rem] text-[#a1a1aa] mb-7 max-w-[480px]">
+              <p className="text-[1rem] md:text-[1.25rem] text-[#a1a1aa] mb-5 md:mb-7 max-w-[480px]">
                 Official Computer Science Engineering and <strong className="text-[#f2f2f2] font-semibold">Data Science</strong> Department Platform. A high-performance hub for technical collaboration, insights, and innovation.
               </p>
               <div className="flex gap-4">
@@ -188,47 +188,47 @@ export default async function Home() {
           </p>
         </div>
 
-        <section className="bg-[#0e0e0e] border-y border-white/5 py-16">
-          <div className="max-w-[1200px] mx-auto px-12 grid grid-cols-1 md:grid-cols-4 gap-12 text-center">
+        <section className="bg-[#0e0e0e] border-y border-white/5 py-10 md:py-16">
+          <div className="max-w-[1200px] mx-auto px-5 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 text-center">
             <div>
-              <h3 className="text-[3.5rem] font-medium tracking-[-0.03em] mb-2 text-[#f2f2f2]">
+              <h3 className="text-[2.2rem] md:text-[3.5rem] font-medium tracking-[-0.03em] mb-2 text-[#f2f2f2]">
                 {totalVisitors.toLocaleString()}
               </h3>
-              <p className="text-[0.9rem] text-[#a1a1aa] uppercase tracking-[0.05em] font-medium">Total Visitors</p>
+              <p className="text-[0.75rem] md:text-[0.9rem] text-[#a1a1aa] uppercase tracking-[0.05em] font-medium">Total Visitors</p>
             </div>
             <div>
-              <h3 className="text-[3.5rem] font-medium tracking-[-0.03em] mb-2 text-[#f2f2f2]">{totalUsers + 50}+</h3>
-              <p className="text-[0.9rem] text-[#a1a1aa] uppercase tracking-[0.05em] font-medium">Active Students</p>
+              <h3 className="text-[2.2rem] md:text-[3.5rem] font-medium tracking-[-0.03em] mb-2 text-[#f2f2f2]">{totalUsers + 50}+</h3>
+              <p className="text-[0.75rem] md:text-[0.9rem] text-[#a1a1aa] uppercase tracking-[0.05em] font-medium">Active Students</p>
             </div>
             <div>
-              <h3 className="text-[3.5rem] font-medium tracking-[-0.03em] mb-2 text-[#f2f2f2]">3</h3>
-              <p className="text-[0.9rem] text-[#a1a1aa] uppercase tracking-[0.05em] font-medium">Specialized Clubs</p>
+              <h3 className="text-[2.2rem] md:text-[3.5rem] font-medium tracking-[-0.03em] mb-2 text-[#f2f2f2]">3</h3>
+              <p className="text-[0.75rem] md:text-[0.9rem] text-[#a1a1aa] uppercase tracking-[0.05em] font-medium">Specialized Clubs</p>
             </div>
             <div>
-              <h3 className="text-[3.5rem] font-medium tracking-[-0.03em] mb-2 text-[#f2f2f2]">{eventRegsCount + 10}+</h3>
-              <p className="text-[0.9rem] text-[#a1a1aa] uppercase tracking-[0.05em] font-medium">Yearly Events</p>
+              <h3 className="text-[2.2rem] md:text-[3.5rem] font-medium tracking-[-0.03em] mb-2 text-[#f2f2f2]">{eventRegsCount + 10}+</h3>
+              <p className="text-[0.75rem] md:text-[0.9rem] text-[#a1a1aa] uppercase tracking-[0.05em] font-medium">Yearly Events</p>
             </div>
           </div>
         </section>
 
-        <div className="max-w-[1200px] mx-auto px-12">
-          <section className="py-[120px]">
-            <div className="mb-16">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-12">
+          <section className="py-14 md:py-[120px]">
+            <div className="mb-10 md:mb-16">
               <h2 className="text-[2.5rem] font-semibold tracking-[-0.03em] mb-4">Featured Clubs</h2>
               <p className="text-[#a1a1aa] text-[1.1rem]">Join specialized groups focused on modern tech stacks.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-10">
               {/* Web Nest */}
               <div className="group [perspective:1000px] cursor-pointer">
-                <div className="relative h-full bg-[#0a0a0a] rounded-[24px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(10deg)_rotateX(5deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-[#3b82f6] before:to-[#60a5fa] before:rounded-[24px] before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 group-hover:shadow-[rgba(59,130,246,0.3)_0px_30px_30px_-20px]">
-                  <div className="relative h-full flex flex-col gap-6 bg-[#0a0a0a] rounded-[22px] p-8 [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(30px)] border border-white/5 shadow-inner overflow-hidden">
+                <div className="relative h-full bg-[#0a0a0a] rounded-[18px] md:rounded-[24px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(10deg)_rotateX(5deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-[#3b82f6] before:to-[#60a5fa] before:rounded-[18px] md:before:rounded-[24px] before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 group-hover:shadow-[rgba(59,130,246,0.3)_0px_30px_30px_-20px]">
+                  <div className="relative h-full flex flex-col gap-3 md:gap-6 bg-[#0a0a0a] rounded-[16px] md:rounded-[22px] p-4 md:p-8 [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(30px)] border border-white/5 shadow-inner overflow-hidden">
                     <div className="absolute -top-4 -right-4 w-32 h-32 bg-[#3b82f6] blur-[50px] opacity-10 group-hover:opacity-30 rounded-full transition-opacity duration-500 pointer-events-none"></div>
-                    <div className="w-12 h-12 rounded-lg bg-[#3b82f6]/10 flex items-center justify-center text-[#3b82f6] [transform:translateZ(20px)] border border-[#3b82f6]/20">
-                      <Code />
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-[#3b82f6]/10 flex items-center justify-center text-[#3b82f6] [transform:translateZ(20px)] border border-[#3b82f6]/20">
+                      <Code size={16} className="md:hidden" /><Code className="hidden md:block" />
                     </div>
                     <div className="[transform:translateZ(20px)]">
-                      <h3 className="text-[1.25rem] font-semibold mb-2 tracking-[-0.01em] text-white">Web Nest</h3>
-                      <p className="text-zinc-400 text-[0.95rem] leading-relaxed">Full-stack development, modern web frameworks, and cloud deployment strategies.</p>
+                      <h3 className="text-[0.95rem] md:text-[1.25rem] font-semibold mb-1 md:mb-2 tracking-[-0.01em] text-white">Web Nest</h3>
+                      <p className="text-zinc-400 text-[0.75rem] md:text-[0.95rem] leading-relaxed">Full-stack development, modern frameworks, and cloud deployment.</p>
                     </div>
                   </div>
                 </div>
@@ -236,31 +236,34 @@ export default async function Home() {
 
               {/* Data Science */}
               <div className="group [perspective:1000px] cursor-pointer">
-                <div className="relative h-full bg-[#0a0a0a] rounded-[24px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(0deg)_rotateX(8deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-[#9333ea] before:to-[#c084fc] before:rounded-[24px] before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 group-hover:shadow-[rgba(147,51,234,0.3)_0px_30px_30px_-20px]">
-                  <div className="relative h-full flex flex-col gap-6 bg-[#0a0a0a] rounded-[22px] p-8 [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(30px)] border border-white/5 shadow-inner overflow-hidden">
+                <div className="relative h-full bg-[#0a0a0a] rounded-[18px] md:rounded-[24px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(0deg)_rotateX(8deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-[#9333ea] before:to-[#c084fc] before:rounded-[18px] md:before:rounded-[24px] before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 group-hover:shadow-[rgba(147,51,234,0.3)_0px_30px_30px_-20px]">
+                  <div className="relative h-full flex flex-col gap-3 md:gap-6 bg-[#0a0a0a] rounded-[16px] md:rounded-[22px] p-4 md:p-8 [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(30px)] border border-white/5 shadow-inner overflow-hidden">
                     <div className="absolute -top-4 -right-4 w-32 h-32 bg-[#9333ea] blur-[50px] opacity-10 group-hover:opacity-30 rounded-full transition-opacity duration-500 pointer-events-none"></div>
-                    <div className="w-12 h-12 rounded-lg bg-[#9333ea]/10 flex items-center justify-center text-[#9333ea] [transform:translateZ(20px)] border border-[#9333ea]/20">
-                      <Network />
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-[#9333ea]/10 flex items-center justify-center text-[#9333ea] [transform:translateZ(20px)] border border-[#9333ea]/20">
+                      <Network size={16} className="md:hidden" /><Network className="hidden md:block" />
                     </div>
                     <div className="[transform:translateZ(20px)]">
-                      <h3 className="text-[1.25rem] font-semibold mb-2 tracking-[-0.01em] text-white">Data Science Innovation</h3>
-                      <p className="text-zinc-400 text-[0.95rem] leading-relaxed">Machine learning models, deep learning architectures, and data engineering.</p>
+                      <h3 className="text-[0.95rem] md:text-[1.25rem] font-semibold mb-1 md:mb-2 tracking-[-0.01em] text-white">Data Science</h3>
+                      <p className="text-zinc-400 text-[0.75rem] md:text-[0.95rem] leading-relaxed">ML models, deep learning, and data engineering pipelines.</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Career Catalyst */}
-              <div className="group [perspective:1000px] cursor-pointer">
-                <div className="relative h-full bg-[#0a0a0a] rounded-[24px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-10deg)_rotateX(5deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-[#10b981] before:to-[#34d399] before:rounded-[24px] before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 group-hover:shadow-[rgba(16,185,129,0.3)_0px_30px_30px_-20px]">
-                  <div className="relative h-full flex flex-col gap-6 bg-[#0a0a0a] rounded-[22px] p-8 [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(30px)] border border-white/5 shadow-inner overflow-hidden">
+              {/* Career Catalyst — spans full width on mobile, 1 col on desktop */}
+              <div className="col-span-2 md:col-span-1 group [perspective:1000px] cursor-pointer">
+                <div className="relative h-full bg-[#0a0a0a] rounded-[18px] md:rounded-[24px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-10deg)_rotateX(5deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-[#10b981] before:to-[#34d399] before:rounded-[18px] md:before:rounded-[24px] before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 group-hover:shadow-[rgba(16,185,129,0.3)_0px_30px_30px_-20px]">
+                  <div className="relative h-full flex flex-col md:flex-col gap-3 md:gap-6 bg-[#0a0a0a] rounded-[16px] md:rounded-[22px] p-4 md:p-8 [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(30px)] border border-white/5 shadow-inner overflow-hidden">
                     <div className="absolute -top-4 -right-4 w-32 h-32 bg-[#10b981] blur-[50px] opacity-10 group-hover:opacity-30 rounded-full transition-opacity duration-500 pointer-events-none"></div>
-                    <div className="w-12 h-12 rounded-lg bg-[#10b981]/10 flex items-center justify-center text-[#10b981] [transform:translateZ(20px)] border border-[#10b981]/20">
-                      <Rocket />
+                    <div className="flex items-center gap-3 md:block">
+                      <div className="w-8 h-8 md:w-12 md:h-12 md:mb-0 rounded-lg bg-[#10b981]/10 flex items-center justify-center text-[#10b981] [transform:translateZ(20px)] border border-[#10b981]/20 shrink-0">
+                        <Rocket size={16} className="md:hidden" /><Rocket className="hidden md:block" />
+                      </div>
+                      <h3 className="text-[0.95rem] md:text-[1.25rem] font-semibold tracking-[-0.01em] text-white md:hidden">Career Catalyst</h3>
                     </div>
                     <div className="[transform:translateZ(20px)]">
-                      <h3 className="text-[1.25rem] font-semibold mb-2 tracking-[-0.01em] text-white">Career Catalyst</h3>
-                      <p className="text-zinc-400 text-[0.95rem] leading-relaxed">Industry readiness, algorithmic problem solving, and technical interview prep.</p>
+                      <h3 className="hidden md:block text-[1.25rem] font-semibold mb-2 tracking-[-0.01em] text-white">Career Catalyst</h3>
+                      <p className="text-zinc-400 text-[0.75rem] md:text-[0.95rem] leading-relaxed">Industry readiness, algorithmic problem solving, and technical interview prep.</p>
                     </div>
                   </div>
                 </div>
@@ -268,17 +271,17 @@ export default async function Home() {
             </div>
           </section>
 
-          <section className="py-[120px]">
-            <div className="mb-16">
-              <h2 className="text-[2.5rem] font-semibold tracking-[-0.03em] mb-4">Upcoming Events</h2>
-              <p className="text-[#a1a1aa] text-[1.1rem]">Technical workshops, hackathons, and guest lectures.</p>
+          <section className="py-14 md:py-[120px]">
+            <div className="mb-10 md:mb-16">
+              <h2 className="text-[1.8rem] md:text-[2.5rem] font-semibold tracking-[-0.03em] mb-3 md:mb-4">Upcoming Events</h2>
+              <p className="text-[#a1a1aa] text-[1rem] md:text-[1.1rem]">Technical workshops, hackathons, and guest lectures.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-10">
 
               {/* HackRonyX Main Event */}
-              <div className="md:col-span-2 group [perspective:1000px] cursor-pointer">
+              <div className="col-span-2 group [perspective:1000px] cursor-pointer">
                 <div className="relative h-full bg-[#0a0a0a] rounded-[30px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(3deg)_rotateX(2deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-[#9333ea] before:to-[#6366f1] before:rounded-[30px] before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 group-hover:shadow-[rgba(147,51,234,0.3)_0px_40px_40px_-20px]">
-                  <div className="relative h-full flex flex-col justify-between bg-[#0a0a0a] rounded-[28px] p-10 min-h-[400px] [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(40px)] border border-white/5 shadow-inner overflow-hidden">
+                  <div className="relative h-full flex flex-col justify-between bg-[#0a0a0a] rounded-[28px] p-6 md:p-10 min-h-[300px] md:min-h-[400px] [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(40px)] border border-white/5 shadow-inner overflow-hidden">
                     <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#9333ea] blur-[80px] opacity-10 group-hover:opacity-30 rounded-full transition-opacity duration-500 pointer-events-none"></div>
 
                     <div className="[transform:translateZ(30px)]">
@@ -286,8 +289,8 @@ export default async function Home() {
                         <span className="text-[0.85rem] font-semibold text-[#9333ea] uppercase tracking-[0.05em] drop-shadow-md">June 2026</span>
                         <span className="text-[0.72rem] font-bold uppercase tracking-[0.08em] px-3 py-1 bg-[#9333ea]/10 text-[#a855f7] border border-[#9333ea]/20 rounded-full shadow-sm">Upcoming</span>
                       </div>
-                      <h3 className="text-[2.2rem] font-bold tracking-[-0.02em] mb-4 text-white">HackRonyX 2026</h3>
-                      <p className="text-zinc-400 mb-8 max-w-[600px] leading-relaxed">The second edition of our flagship national hackathon returns. Compete, build, and innovate over 48 hours with thousands of participants from across the country.</p>
+                      <h3 className="text-[1.6rem] md:text-[2.2rem] font-bold tracking-[-0.02em] mb-3 md:mb-4 text-white">HackRonyX 2026</h3>
+                      <p className="text-zinc-400 mb-5 md:mb-8 max-w-[600px] leading-relaxed text-sm md:text-base">The second edition of our flagship national hackathon returns. Compete, build, and innovate over 48 hours with thousands of participants from across the country.</p>
                     </div>
 
                     <div className="[transform:translateZ(30px)]">
@@ -300,30 +303,30 @@ export default async function Home() {
               </div>
 
               {/* Stacked Dynamic Approved Events */}
-              <div className="flex flex-col gap-6 md:gap-10">
+              <div className="col-span-2 md:col-span-1 flex flex-col gap-3 md:gap-10">
                 {approvedEvents.length > 0 ? (
                   approvedEvents.map((ev, i) => (
                     <div key={ev.id} className="group [perspective:1000px] cursor-pointer flex-1">
-                      <div className={`relative h-full bg-[#0a0a0a] rounded-[24px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-5deg)_rotateX(5deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 ${i % 2 === 0
-                          ? "before:from-[#f59e0b] before:to-[#ea580c] group-hover:shadow-[rgba(245,158,11,0.3)_0px_20px_20px_-10px] before:rounded-[24px]"
-                          : "before:from-[#10b981] before:to-[#6ee7b7] group-hover:shadow-[rgba(16,185,129,0.3)_0px_20px_20px_-10px] before:rounded-[24px]"
+                      <div className={`relative h-full bg-[#0a0a0a] rounded-[18px] md:rounded-[24px] p-[2px] transition-all duration-500 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-5deg)_rotateX(5deg)] before:absolute before:inset-0 before:bg-gradient-to-br before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500 ${i % 2 === 0
+                          ? "before:from-[#f59e0b] before:to-[#ea580c] group-hover:shadow-[rgba(245,158,11,0.3)_0px_20px_20px_-10px] before:rounded-[18px] md:before:rounded-[24px]"
+                          : "before:from-[#10b981] before:to-[#6ee7b7] group-hover:shadow-[rgba(16,185,129,0.3)_0px_20px_20px_-10px] before:rounded-[18px] md:before:rounded-[24px]"
                         }`}>
-                        <div className="relative h-full flex flex-col justify-center bg-[#0a0a0a] rounded-[22px] p-8 [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(30px)] border border-white/5 shadow-inner overflow-hidden">
+                        <div className="relative h-full flex flex-col justify-center bg-[#0a0a0a] rounded-[16px] md:rounded-[22px] p-4 md:p-8 [transform-style:preserve-3d] transition-transform duration-500 group-hover:[transform:translateZ(30px)] border border-white/5 shadow-inner overflow-hidden">
                           <div className={`absolute -top-4 -right-4 w-32 h-32 blur-[50px] opacity-10 group-hover:opacity-30 rounded-full transition-opacity duration-500 pointer-events-none ${i % 2 === 0 ? "bg-[#f59e0b]" : "bg-[#10b981]"
                             }`}></div>
 
-                          <div className="[transform:translateZ(20px)] mb-6">
-                            <span className={`text-[0.85rem] font-bold uppercase tracking-[0.05em] drop-shadow-sm ${i % 2 === 0 ? "text-[#f59e0b]" : "text-[#10b981]"
+                          <div className="[transform:translateZ(20px)] mb-2 md:mb-6">
+                            <span className={`text-[0.72rem] md:text-[0.85rem] font-bold uppercase tracking-[0.05em] drop-shadow-sm ${i % 2 === 0 ? "text-[#f59e0b]" : "text-[#10b981]"
                               }`}>
                               {ev.proposed_date ? new Date(ev.proposed_date).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'TBD'}
                             </span>
                           </div>
-                          <h3 className="text-[1.25rem] font-semibold mb-6 tracking-[-0.01em] text-white [transform:translateZ(20px)]">
+                          <h3 className="text-[0.95rem] md:text-[1.25rem] font-semibold mb-3 md:mb-6 tracking-[-0.01em] text-white [transform:translateZ(20px)]">
                             {ev.event_title}
                           </h3>
 
                           <div className="[transform:translateZ(20px)] mt-auto">
-                            <Link href="/events" className="text-[0.9rem] font-bold text-[#f2f2f2] hover:text-white transition-colors flex items-center gap-2">
+                            <Link href="/events" className="text-[0.8rem] md:text-[0.9rem] font-bold text-[#f2f2f2] hover:text-white transition-colors flex items-center gap-2">
                               View Details &rarr;
                             </Link>
                           </div>
@@ -332,21 +335,21 @@ export default async function Home() {
                     </div>
                   ))
                 ) : (
-                  <div className="flex-1 flex flex-col justify-center items-center rounded-[24px] border border-white/5 bg-[#0a0a0a] min-h-[150px]">
-                    <p className="text-zinc-500 font-medium">New events dropping soon.</p>
+                  <div className="flex-1 flex flex-col justify-center items-center rounded-[24px] border border-white/5 bg-[#0a0a0a] min-h-[120px] md:min-h-[150px]">
+                    <p className="text-zinc-500 font-medium text-sm md:text-base">New events dropping soon.</p>
                   </div>
                 )}
               </div>
             </div>
           </section>
 
-          <section className="py-24 border-t border-white/5 relative z-10">
-            <div className="mb-14">
-              <h2 className="text-[2.5rem] font-semibold tracking-[-0.03em] mb-4">Nexus Archive</h2>
-              <p className="text-[#a1a1aa] text-[1.1rem]">A visual journey through our past events, hackathons, and the incredible community.</p>
+          <section className="py-12 md:py-24 border-t border-white/5 relative z-10">
+            <div className="mb-8 md:mb-14">
+              <h2 className="text-[1.8rem] md:text-[2.5rem] font-semibold tracking-[-0.03em] mb-3 md:mb-4">Nexus Archive</h2>
+              <p className="text-[#a1a1aa] text-[1rem] md:text-[1.1rem]">A visual journey through our past events, hackathons, and the incredible community.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16 no-underline">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-12 md:mb-16 no-underline">
               {ARCHIVE_IMAGES.map((img, i) => (
                 <div
                   key={i}
@@ -373,10 +376,10 @@ export default async function Home() {
             </div>
           </section>
 
-          <section className="py-24 border-t border-white/5 mb-20">
-            <div className="mb-14">
-              <h2 className="text-[2.5rem] font-semibold tracking-[-0.03em] mb-4">Legacy & Achievements</h2>
-              <p className="text-[#a1a1aa] text-[1.1rem]">Highlighting historical milestones and major technical contributions.</p>
+          <section className="py-12 md:py-24 border-t border-white/5 mb-10 md:mb-20">
+            <div className="mb-8 md:mb-14">
+              <h2 className="text-[1.8rem] md:text-[2.5rem] font-semibold tracking-[-0.03em] mb-3 md:mb-4">Legacy & Achievements</h2>
+              <p className="text-[#a1a1aa] text-[1rem] md:text-[1.1rem]">Highlighting historical milestones and major technical contributions.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-16">
@@ -420,8 +423,8 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="text-center py-[120px]">
-              <h2 className="text-[2.2rem] font-semibold tracking-[-0.03em] mb-7">Ready to build the future?</h2>
+            <div className="text-center py-16 md:py-[120px]">
+              <h2 className="text-[1.6rem] md:text-[2.2rem] font-semibold tracking-[-0.03em] mb-5 md:mb-7">Ready to build the future?</h2>
               <Link href="/signup" className="inline-flex items-center justify-center px-8 py-4 rounded-md text-[1.1rem] font-medium bg-[#9333ea] text-white border border-transparent hover:bg-[#a855f7] transition-all">
                 Join Nexus Forum
               </Link>

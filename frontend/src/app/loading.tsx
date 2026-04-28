@@ -17,7 +17,7 @@ export default function Loading() {
           <Skeleton className="h-4 w-[60%] mx-auto opacity-20" />
         </div>
 
-        <div className="max-w-[1200px] mx-auto px-12">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-12">
           {/* Hero Section Skeleton */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center min-h-[calc(100vh-184px)] py-[120px]">
             <div className="max-w-[600px]">
@@ -49,7 +49,7 @@ export default function Loading() {
 
         {/* Stats Grid Skeleton */}
         <section className="bg-[#0e0e0e] border-y border-white/5 py-16">
-          <div className="max-w-[1200px] mx-auto px-12 grid grid-cols-2 md:grid-cols-4 gap-12">
+          <div className="max-w-[1200px] mx-auto px-5 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="flex flex-col items-center gap-2">
                 <Skeleton className="h-14 w-24 mb-2" />
@@ -60,7 +60,7 @@ export default function Loading() {
         </section>
 
         {/* Featured Clubs Grid Skeleton Hint */}
-        <div className="max-w-[1200px] mx-auto px-12 py-[120px]">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-12 py-14 md:py-[120px]">
            <Skeleton className="h-10 w-64 mb-16" />
            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               <Skeleton className="h-[240px] rounded-[24px]" />
